@@ -23,11 +23,15 @@
   }
 
 @keyframes vertical-step {
-  0%, 12.5%   { transform: translateY(0px); }
-  25%, 37.5%  { transform: translateY(-36px); }
-  50%, 62.5%  { transform: translateY(-72px); }
-  75%, 87.5%  { transform: translateY(-108px); }
-  100%        { transform: translateY(-144px); }
+  0%, 6.25%    { transform: translateY(0px); }      /* 1st item visible */
+  12.5%, 18.75% { transform: translateY(-36px); }   /* 2nd item */
+  25%, 31.25%   { transform: translateY(-72px); }   /* 3rd item */
+  37.5%, 43.75% { transform: translateY(-108px); }  /* 4th item */
+  50%, 56.25%   { transform: translateY(-144px); }  /* 5th item (1st duplicate) */
+  62.5%, 68.75% { transform: translateY(-180px); }  /* 6th item (2nd duplicate) */
+  75%, 81.25%   { transform: translateY(-216px); }  /* 7th item */
+  87.5%, 93.75% { transform: translateY(-252px); }  /* 8th item */
+  100%          { transform: translateY(-288px); }  /* loop back */
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
