@@ -27,6 +27,7 @@
   height: 44px;
   overflow: hidden;
   background: #141210;
+  color: #c4a35a;
   font-family: 'Cinzel', serif;
   border-bottom: 1px solid #2a2520;
   text-align: center;
@@ -43,20 +44,22 @@
   opacity: 0;
   padding: 12px 0;
   line-height: 20px;
-
   animation: fade-cycle 16s linear infinite;
 }
 
-/* stagger items evenly */
+/* stagger items */
 .ticker-item:nth-child(1) { animation-delay: 0s; }
 .ticker-item:nth-child(2) { animation-delay: 4s; }
 .ticker-item:nth-child(3) { animation-delay: 8s; }
 .ticker-item:nth-child(4) { animation-delay: 12s; }
 
+/* smooth fade in/out */
 @keyframes fade-cycle {
-  0%, 19.99%   { opacity: 0; }   /* blank before fade in */
-  20%, 39.99%  { opacity: 1; }   /* visible */
-  40%, 100%    { opacity: 0; }   /* fade out and blank */
+  0%, 19%    { opacity: 0; }
+  20%, 25%   { opacity: 1; }   /* fade in gradually */
+  25%, 35%   { opacity: 1; }   /* fully visible */
+  35%, 40%   { opacity: 0; }   /* fade out gradually */
+  40%, 100%  { opacity: 0; }   /* remain blank until next cycle */
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
