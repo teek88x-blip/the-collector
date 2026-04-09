@@ -50,7 +50,7 @@
 
   /* TICKER */
   .ticker { height: 36px; overflow: hidden; background: #141210; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; position: relative; }
-  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); position: absolute; opacity: 0; transform: translateY(14px); transition: none; }
+  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); position: absolute; opacity: 0; transform: translateY(14px); transition: none; }
   .ticker-text.visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
   .ticker-text.out { opacity: 0; transform: translateY(-14px); transition: opacity 0.4s ease, transform 0.4s ease; }
 
@@ -433,9 +433,9 @@
     // Ticker
     const tickerMessages = [
       'A contract has been accepted',
-      'Gorvak spotted near Ironpeak',
+      'Gorvak spotted near Ironpeak village',
       'Troll defeated on Carrow trade road',
-      'Beware: large Ribbet licking strangers',
+      'Beware: Large Ribbet seen licking strangers',
     ];
     let tickerIndex = 0;
     const tickerEl = document.getElementById('tickerText');
