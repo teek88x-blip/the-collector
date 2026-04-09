@@ -32,6 +32,22 @@
   .site-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(2rem, 6vw, 3.6rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 2rem; text-shadow: 0 0 40px rgba(196, 163, 90, 0.1); }
   .site-epigraph { max-width: 640px; margin: 0 auto; font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; line-height: 1.9; color: var(--text-secondary); }
 
+  /* AUDIO */
+  .audio-toggle { position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 200; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.6rem 1.2rem; cursor: pointer; transition: all 0.3s ease; display: flex; align-items: center; gap: 0.5rem; }
+  .audio-toggle:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); }
+  .audio-toggle.playing { color: var(--accent-gold); border-color: var(--accent-gold); }
+  .audio-bars { display: flex; gap: 2px; align-items: flex-end; height: 12px; }
+  .audio-bars span { display: block; width: 2px; background: currentColor; }
+  .audio-toggle.playing .audio-bars span { animation: barPulse 0.8s ease-in-out infinite alternate; }
+  .audio-toggle.playing .audio-bars span:nth-child(1) { animation-delay: 0s; }
+  .audio-toggle.playing .audio-bars span:nth-child(2) { animation-delay: 0.2s; }
+  .audio-toggle.playing .audio-bars span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes barPulse { from { height: 3px; } to { height: 12px; } }
+  .audio-bars span:nth-child(1) { height: 4px; }
+  .audio-bars span:nth-child(2) { height: 8px; }
+  .audio-bars span:nth-child(3) { height: 5px; }
+
+  /* NAV */
   .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .session-nav-inner { max-width: 800px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
   .session-nav-inner::-webkit-scrollbar { display: none; }
@@ -40,8 +56,10 @@
   .nav-link.active { color: var(--accent-gold); border-bottom-color: var(--accent-red); }
 
   .content { max-width: 740px; margin: 0 auto; padding: 0 2rem; }
+
+  /* SESSION ENTRY (used for latest) */
   .session-entry { padding: 5rem 0; border-bottom: 1px solid var(--border-subtle); position: relative; }
-  .session-entry:last-child { border-bottom: none; }
+  .latest-badge { display: inline-block; font-family: 'Cinzel', serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-gold); background: rgba(196, 163, 90, 0.1); border: 1px solid var(--accent-gold-dim); padding: 0.25rem 0.75rem; margin-left: 0.75rem; vertical-align: middle; }
   .session-number { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-red); margin-bottom: 0.75rem; display: block; }
   .session-title { font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(1.4rem, 4vw, 1.8rem); color: var(--text-primary); margin-bottom: 2.5rem; letter-spacing: 0.05em; line-height: 1.3; }
   .session-art { margin-bottom: 2.5rem; border: 1px solid var(--border-subtle); overflow: hidden; }
@@ -67,10 +85,25 @@
   .form-container iframe { width: 100%; height: 500px; border: none; background: transparent; }
 
   .divider { text-align: center; padding: 1rem 0; color: var(--text-muted); font-size: 0.8rem; letter-spacing: 0.6em; }
-  .site-footer { text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
 
-  .reveal { opacity: 0; transform: translateY(30px); transition: opacity 0.6s ease, transform 0.6s ease; }
-  .reveal.visible { opacity: 1; transform: translateY(0); }
+  /* ARCHIVE */
+  .archive-section { padding: 3rem 0; }
+  .archive-header { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2rem; text-align: center; }
+
+  .archive-item { border: 1px solid var(--border-subtle); margin-bottom: 0.75rem; transition: border-color 0.3s ease; }
+  .archive-item:hover { border-color: var(--border-warm); }
+  .archive-item-header { display: flex; justify-content: space-between; align-items: center; padding: 1.25rem 2rem; cursor: pointer; transition: background 0.3s ease; }
+  .archive-item-header:hover { background: rgba(255,255,255,0.02); }
+  .archive-item-number { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-red); margin-right: 1rem; white-space: nowrap; }
+  .archive-item-title { font-family: 'Cinzel', serif; font-size: 1rem; color: var(--text-primary); letter-spacing: 0.05em; flex: 1; }
+  .archive-item-arrow { color: var(--text-muted); font-size: 0.8rem; transition: transform 0.3s ease; margin-left: 1rem; }
+  .archive-item.open .archive-item-arrow { transform: rotate(180deg); }
+
+  .archive-item-content { display: none; padding: 0 2rem 2.5rem; }
+  .archive-item.open .archive-item-content { display: block; }
+  .archive-item-content .session-art { margin-top: 1rem; }
+
+  .site-footer { text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
 
   @media (max-width: 600px) {
     .site-header { padding: 4rem 1.5rem 3rem; }
@@ -78,11 +111,23 @@
     .session-entry { padding: 3.5rem 0; }
     .collector-question { padding: 1.5rem; }
     .character-card { padding: 1.25rem 1.5rem; }
-    .nav-link { padding: 0.8rem 1rem; }
+    .nav-link { padding: 0.8rem 1rem; font-size: 0.6rem; }
+    .audio-toggle { bottom: 1rem; right: 1rem; padding: 0.5rem 0.8rem; font-size: 0.55rem; }
+    .archive-item-header { padding: 1rem 1.25rem; }
+    .archive-item-content { padding: 0 1.25rem 2rem; }
   }
 </style>
 </head>
 <body>
+
+  <audio id="ambientAudio" loop preload="none">
+    <source src="ambient.mp3" type="audio/mpeg">
+  </audio>
+
+  <button class="audio-toggle" id="audioBtn" onclick="toggleAudio()">
+    <div class="audio-bars"><span></span><span></span><span></span></div>
+    <span id="audioLabel">Listen</span>
+  </button>
 
   <header class="site-header">
     <div class="header-ornament">&#x2B25; &#x2B25; &#x2B25;</div>
@@ -92,17 +137,19 @@
 
   <nav class="session-nav">
     <div class="session-nav-inner">
-      <a href="#session-02" class="nav-link active"style="display:none">Session 02</a>
-      <a href="#session-01" class="nav-link">Session 01</a>
-      <a href="#session-00" class="nav-link">Session Zero</a>
+      <a href="index.html" class="nav-link active">Sessions</a>
+      <a href="contracts.html" class="nav-link">Contracts</a>
+      <a href="handouts.html" class="nav-link">Handouts</a>
     </div>
   </nav>
 
   <main class="content">
 
-    <!-- SESSION 02 -->
-    <article class="session-entry reveal" id="session-02"style="display:none">
-      <span class="session-number">Session 02</span>
+    <!-- ============================================ -->
+    <!-- LATEST SESSION (always the most recent here) -->
+    <!-- ============================================ -->
+    <article class="session-entry" id="latest">
+      <span class="session-number">Session 02 <span class="latest-badge">Latest</span></span>
       <h2 class="session-title">The Better Offer</h2>
       <div class="session-art">
         <img src="session-02-art.png" alt="Session 02, The Better Offer">
@@ -124,99 +171,121 @@
       </div>
     </article>
 
-    <div class="divider">&middot; &middot; &middot;</div>
+    <!-- ============================================ -->
+    <!-- ARCHIVE (all previous sessions, newest first) -->
+    <!-- ============================================ -->
+    <section class="archive-section">
+      <h2 class="archive-header">Archive</h2>
 
-    <!-- SESSION 01 -->
-    <article class="session-entry reveal" id="session-01">
-      <span class="session-number">Session 01</span>
-      <h2 class="session-title">The Cliff and the Letter</h2>
-      <div class="session-art">
-        <img src="session-01-art.png" alt="Session 01, The Cliff and the Letter">
-      </div>
-      <div class="session-body">
-        <p>Four hunters took a cliff face for a promise of coin and the head of a mountain troll. Not the worst reason to risk a fall.</p>
-        <p>The cave at the summit offered its own welcome, a den of Mawbs, feral and busy with a horse that had seen better days. Sticky and Croakelion stepped inside to investigate while Mai-amar held position at the mouth. A sensible enough arrangement, until the troll made its own introduction from behind.</p>
-        <p>What followed split into two fights the party may never fully reconcile. Sticky rushed to Mai-amar's side, and together the two of them brought the creature down, no small thing for a goblin and an elf against a mountain troll. Meanwhile, Croakelion conducted his own war underground, carving through Mawbs with a thoroughness that left remarkably little evidence. A fight no one else saw and few traces to prove it happened.</p>
-        <p>Battered, they made their way back toward Carrow. The road offered one oddity, a courier, old and unhurried, with no particular explanation for his presence. Then the familiar warmth of Cliff's tavern, payment for the job, and a name passed along: someone called the Tax Collector, looking for reliable hands.</p>
-        <p>The evening ended at Croakelion's hovel, generously self-titled a "mansion," beside Miss Mabel's, where a letter was waiting. Addressed to each of them. By name.</p>
-      </div>
-      <div class="collector-question">
-        <p>Your party just took a real beating for modest pay from a man they trust. Now a stranger who already knows their names is offering work. What is it about your character's life right now that makes them consider saying yes instead of walking away?</p>
-      </div>
-      <div class="form-section">
-        <button class="form-toggle" onclick="toggleForm(this)">Submit Your Answer</button>
-        <div class="form-container">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWN_MVtaRh4uzscuZnQqCxXcgQqL0hNrn5stHg8FDA_WTIQg/viewform?embedded=true" loading="lazy">Loading…</iframe>
+      <!-- SESSION 01 -->
+      <div class="archive-item" id="session-01">
+        <div class="archive-item-header" onclick="toggleArchive(this)">
+          <span class="archive-item-number">Session 01</span>
+          <span class="archive-item-title">The Cliff and the Letter</span>
+          <span class="archive-item-arrow">&#x25BC;</span>
+        </div>
+        <div class="archive-item-content">
+          <div class="session-art">
+            <img src="session-01-art.png" alt="Session 01, The Cliff and the Letter">
+          </div>
+          <div class="session-body">
+            <p>Four hunters took a cliff face for a promise of coin and the head of a mountain troll. Not the worst reason to risk a fall.</p>
+            <p>The cave at the summit offered its own welcome, a den of Mawbs, feral and busy with a horse that had seen better days. Sticky and Croakelion stepped inside to investigate while Mai-amar held position at the mouth. A sensible enough arrangement, until the troll made its own introduction from behind.</p>
+            <p>What followed split into two fights the party may never fully reconcile. Sticky rushed to Mai-amar's side, and together the two of them brought the creature down, no small thing for a goblin and an elf against a mountain troll. Meanwhile, Croakelion conducted his own war underground, carving through Mawbs with a thoroughness that left remarkably little evidence. A fight no one else saw and few traces to prove it happened.</p>
+            <p>Battered, they made their way back toward Carrow. The road offered one oddity, a courier, old and unhurried, with no particular explanation for his presence. Then the familiar warmth of Cliff's tavern, payment for the job, and a name passed along: someone called the Tax Collector, looking for reliable hands.</p>
+            <p>The evening ended at Croakelion's hovel, generously self-titled a "mansion," beside Miss Mabel's, where a letter was waiting. Addressed to each of them. By name.</p>
+          </div>
+          <div class="collector-question">
+            <p>Your party just took a real beating for modest pay from a man they trust. Now a stranger who already knows their names is offering work. What is it about your character's life right now that makes them consider saying yes instead of walking away?</p>
+          </div>
+          <div class="form-section">
+            <button class="form-toggle" onclick="toggleForm(this)">Submit Your Answer</button>
+            <div class="form-container">
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWN_MVtaRh4uzscuZnQqCxXcgQqL0hNrn5stHg8FDA_WTIQg/viewform?embedded=true" loading="lazy">Loading…</iframe>
+            </div>
+          </div>
         </div>
       </div>
-    </article>
 
-    <div class="divider">&middot; &middot; &middot;</div>
-
-    <!-- SESSION ZERO -->
-    <article class="session-entry reveal" id="session-00">
-      <span class="session-number">Session Zero</span>
-      <h2 class="session-title">The Professionals</h2>
-      <div class="session-body">
-        <p>Four hunters. Not chosen. Not destined. Simply good enough at dangerous work to still be alive, and smart enough to know that matters. They have bled together, argued over coin, shared bad food on worse roads, and learned when to trust each other's instincts without asking why. They are not friends by any simple definition. They are something more useful than that.</p>
-      </div>
-
-      <div class="character-card">
-        <div class="char-name">Croakelion</div>
-        <div class="char-desc">Kroaken Seraph. A towering amphibian figure who carries himself with the absolute conviction of divinity. He believes he is the sole Kroaken in existence, and his golden wings of light do little to discourage the assumption. Whether the gods agree with his self-appointment is a question he has not yet thought to ask.</div>
-      </div>
-      <div class="character-card">
-        <div class="char-name">Sticky</div>
-        <div class="char-desc">Goblin Wizard. Small, sharp, and half-trained by a forgetful mentor named Old Jack. What Sticky lacks in formal education he makes up for in the kind of reckless ingenuity that keeps a goblin alive long enough to become dangerous. The magic works. The theory behind it is another matter entirely.</div>
-      </div>
-      <div class="character-card">
-        <div class="char-name">Mai-amar</div>
-        <div class="char-desc">Elf Rogue. Raised by a circus troupe, orphaned by violence, taken in by those who chose to care. He moves like a performer and fights like someone who learned early that grace and survival are the same skill. There is a warmth to him that the work has not yet managed to reach.</div>
-      </div>
-      <div class="character-card">
-        <div class="char-name">Bannanas</div>
-        <div class="char-desc">Simiah Warrior. A natural climber with a prehensile tail and an approach to bounty hunting best described as enthusiastic. Quick hands, quicker feet, and the kind of confidence that comes from knowing there is always something higher to climb to.</div>
-      </div>
-
-      <div class="collector-question">
-        <p>Every hunter has a history before the hunt. The questions below are for those who wish to set theirs down in writing.</p>
-      </div>
-      <div class="form-section">
-        <button class="form-toggle" onclick="toggleForm(this)">Background Questions</button>
-        <div class="form-container">
-          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfvry9TsK2e5UlYjZ_Lfk6HNXX3B5VuPGMPkdjqh8yNwIrkxA/viewform?embedded=true" loading="lazy">Loading…</iframe>
+      <!-- SESSION ZERO -->
+      <div class="archive-item" id="session-00">
+        <div class="archive-item-header" onclick="toggleArchive(this)">
+          <span class="archive-item-number">Session Zero</span>
+          <span class="archive-item-title">The Professionals</span>
+          <span class="archive-item-arrow">&#x25BC;</span>
+        </div>
+        <div class="archive-item-content">
+          <div class="session-body">
+            <p>Four hunters. Not chosen. Not destined. Simply good enough at dangerous work to still be alive, and smart enough to know that matters. They have bled together, argued over coin, shared bad food on worse roads, and learned when to trust each other's instincts without asking why. They are not friends by any simple definition. They are something more useful than that.</p>
+          </div>
+          <div class="character-card">
+            <div class="char-name">Croakelion</div>
+            <div class="char-desc">Kroaken Seraph. A towering amphibian figure who carries himself with the absolute conviction of divinity. He believes he is the sole Kroaken in existence, and his golden wings of light do little to discourage the assumption. Whether the gods agree with his self-appointment is a question he has not yet thought to ask.</div>
+          </div>
+          <div class="character-card">
+            <div class="char-name">Sticky</div>
+            <div class="char-desc">Goblin Wizard. Small, sharp, and half-trained by a forgetful mentor named Old Jack. What Sticky lacks in formal education he makes up for in the kind of reckless ingenuity that keeps a goblin alive long enough to become dangerous. The magic works. The theory behind it is another matter entirely.</div>
+          </div>
+          <div class="character-card">
+            <div class="char-name">Mai-amar</div>
+            <div class="char-desc">Elf Rogue. Raised by a circus troupe, orphaned by violence, taken in by those who chose to care. He moves like a performer and fights like someone who learned early that grace and survival are the same skill. There is a warmth to him that the work has not yet managed to reach.</div>
+          </div>
+          <div class="character-card">
+            <div class="char-name">Bannanas</div>
+            <div class="char-desc">Simiah Warrior. A natural climber with a prehensile tail and an approach to bounty hunting best described as enthusiastic. Quick hands, quicker feet, and the kind of confidence that comes from knowing there is always something higher to climb to.</div>
+          </div>
+          <div class="collector-question">
+            <p>Every hunter has a history before the hunt. The questions below are for those who wish to set theirs down in writing.</p>
+          </div>
+          <div class="form-section">
+            <button class="form-toggle" onclick="toggleForm(this)">Background Questions</button>
+            <div class="form-container">
+              <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfvry9TsK2e5UlYjZ_Lfk6HNXX3B5VuPGMPkdjqh8yNwIrkxA/viewform?embedded=true" loading="lazy">Loading…</iframe>
+            </div>
+          </div>
         </div>
       </div>
-    </article>
+
+    </section>
 
   </main>
 
   <footer class="site-footer">Leave nothing unrecorded</footer>
 
   <script>
+    // Audio
+    const audio = document.getElementById('ambientAudio');
+    const audioBtn = document.getElementById('audioBtn');
+    const audioLabel = document.getElementById('audioLabel');
+    function toggleAudio() {
+      if (audio.paused) {
+        audio.volume = 0.3;
+        audio.play();
+        audioBtn.classList.add('playing');
+        audioLabel.textContent = 'Listening';
+      } else {
+        audio.pause();
+        audioBtn.classList.remove('playing');
+        audioLabel.textContent = 'Listen';
+      }
+    }
+
+    // Form toggle
     function toggleForm(btn) {
       const container = btn.nextElementSibling;
       const isOpen = container.classList.contains('visible');
       container.classList.toggle('visible');
       btn.classList.toggle('open');
-      const defaultLabel = btn.closest('#session-00') ? 'Background Questions' : 'Submit Your Answer';
+      const inSessionZero = btn.closest('#session-00');
+      const defaultLabel = inSessionZero ? 'Background Questions' : 'Submit Your Answer';
       btn.textContent = isOpen ? defaultLabel : 'Close';
     }
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-    const navLinks = document.querySelectorAll('.nav-link');
-    const navObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(link => link.classList.remove('active'));
-          const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
-          if (activeLink) activeLink.classList.add('active');
-        }
-      });
-    }, { threshold: 0.3 });
-    document.querySelectorAll('.session-entry').forEach(section => navObserver.observe(section));
+
+    // Archive toggle
+    function toggleArchive(header) {
+      const item = header.parentElement;
+      item.classList.toggle('open');
+    }
   </script>
 </body>
-</html>          
+</html>
