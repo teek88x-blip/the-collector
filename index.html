@@ -50,9 +50,9 @@
 
   /* TICKER */
   .ticker { height: 36px; overflow: hidden; background: #141210; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; position: relative; }
-  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; position: absolute; }
+  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); position: absolute; opacity: 0; transform: translateY(14px); transition: opacity 0.5s ease, transform 0.5s ease; }
   .ticker-text.visible { opacity: 1; transform: translateY(0); }
-  .ticker-text.out { opacity: 0; transform: translateY(-10px); }
+  .ticker-text.out { opacity: 0; transform: translateY(-14px); transition: opacity 0.4s ease, transform 0.4s ease; }
 
   /* NAV */
   .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
