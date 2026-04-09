@@ -50,8 +50,9 @@
 
   /* TICKER */
   .ticker { height: 36px; overflow: hidden; background: #141210; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; position: relative; }
-  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); opacity: 0; transition: opacity 0.8s ease; position: absolute; }
-  .ticker-text.visible { opacity: 1; }
+  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); opacity: 0; transform: translateY(10px); transition: opacity 0.6s ease, transform 0.6s ease; position: absolute; }
+  .ticker-text.visible { opacity: 1; transform: translateY(0); }
+  .ticker-text.out { opacity: 0; transform: translateY(-10px); }
 
   /* NAV */
   .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
@@ -441,11 +442,14 @@
     tickerEl.textContent = tickerMessages[0];
     setInterval(() => {
       tickerEl.classList.remove('visible');
+      tickerEl.classList.add('out');
       setTimeout(() => {
         tickerIndex = (tickerIndex + 1) % tickerMessages.length;
         tickerEl.textContent = tickerMessages[tickerIndex];
+        tickerEl.classList.remove('out');
+        void tickerEl.offsetWidth;
         tickerEl.classList.add('visible');
-      }, 800);
+      }, 600);
     }, 5000);
   </script>
 </body>
