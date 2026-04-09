@@ -22,9 +22,20 @@
     --shadow-warm: rgba(139, 45, 26, 0.08);
   }
 
-      @keyframes vertical-loop {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
+@keyframes vertical-step {
+  0%   { transform: translateY(0%); }
+  20%  { transform: translateY(0%); }
+
+  25%  { transform: translateY(-25%); }
+  45%  { transform: translateY(-25%); }
+
+  50%  { transform: translateY(-50%); }
+  70%  { transform: translateY(-50%); }
+
+  75%  { transform: translateY(-75%); }
+  95%  { transform: translateY(-75%); }
+
+  100% { transform: translateY(-100%); }
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -200,7 +211,7 @@
   </nav>
 
   <div style="height: 50px; overflow: hidden; background:#141210; color:#c4a35a; font-family: 'Cinzel', serif; border-bottom: 1px solid #2a2520;">
-  <div style="display: inline-block; animation: vertical-loop 10s linear infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase;">
+  <div style="display: inline-block; animation: vertical-step 12s ease-in-out infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase;">
     
     <!-- ORIGINAL -->
     <div style="padding: 10px 0;">A contract has been accepted</div>
