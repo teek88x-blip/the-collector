@@ -44,30 +44,30 @@
   opacity: 0;
   padding: 12px 0;
   line-height: 20px;
-  animation: fade-cycle 16s linear infinite;
+  animation: fade-cycle 8s linear infinite;
 }
 
 /* stagger items */
 .ticker-item:nth-child(1) { animation-delay: 0s; }
-.ticker-item:nth-child(2) { animation-delay: 4s; }
-.ticker-item:nth-child(3) { animation-delay: 8s; }
-.ticker-item:nth-child(4) { animation-delay: 12s; }
+.ticker-item:nth-child(2) { animation-delay: 8s; }
+.ticker-item:nth-child(3) { animation-delay: 16s; }
+.ticker-item:nth-child(4) { animation-delay: 24s; }
 
 @keyframes fade-cycle {
-  0%, 18%        { opacity: 0; }       /* blank */
-  18%, 23%       { opacity: 0.25; }    /* fade in */
-  23%, 28%       { opacity: 0.5; }
-  28%, 33%       { opacity: 0.75; }
-  33%, 35%       { opacity: 1; }       /* fully visible */
+  0%, 5%        { opacity: 0; }       /* blank */
+  5%, 10%       { opacity: 0.25; }    /* fade in */
+  10%, 20%       { opacity: 0.5; }
+  20%, 25%       { opacity: 0.75; }
+  25%, 35%       { opacity: 1; }       /* fully visible */
 
-  35%, 45%       { opacity: 1; }       /* hold */
+  35%, 55%       { opacity: 1; }       /* hold */
   
-  45%, 50%       { opacity: 0.75; }    /* fade out */
-  50%, 55%       { opacity: 0.5; }
-  55%, 58%       { opacity: 0.25; }
-  58%, 60%       { opacity: 0; }       /* fully gone */
+  55%, 65%       { opacity: 0.75; }    /* fade out */
+  65%, 75%       { opacity: 0.5; }
+  75%, 85%       { opacity: 0.25; }
+  85%, 90%       { opacity: 0; }       /* fully gone */
 
-  60%, 100%      { opacity: 0; }       /* blank until next cycle */
+  90%, 100%      { opacity: 0; }       /* blank until next cycle */
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
