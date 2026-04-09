@@ -158,7 +158,7 @@
   .map-pin { position: absolute; width: 18px; height: 18px; transform: translate(-50%, -50%); cursor: pointer; z-index: 10; }
   .map-pin-dot { width: 10px; height: 10px; background: var(--accent-red); border: 2px solid var(--accent-gold); border-radius: 50%; margin: 4px auto 0; transition: transform 0.2s ease, box-shadow 0.2s ease; }
   .map-pin:hover .map-pin-dot { transform: scale(1.4); box-shadow: 0 0 12px rgba(196, 163, 90, 0.4); }
-  .map-pin-dot.visited { background: var(--accent-gold); }
+  .map-pin-dot.visited { background: var(--accent-gold); border-color: #0a0908; }
   .map-pin-dot.unknown { background: var(--text-muted); border-color: var(--border-warm); }
   .map-tooltip { display: none; position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.6rem 1rem; white-space: nowrap; z-index: 20; pointer-events: none; }
   .map-pin:hover .map-tooltip, .map-pin.active .map-tooltip { display: block; }
