@@ -13,9 +13,9 @@
     --bg-card: #1a1714;
     --border-subtle: #2a2520;
     --border-warm: #3d3328;
-    --text-primary: #d4c5a9;
-    --text-secondary: #9a8e78;
-    --text-muted: #6b6155;
+    --text-primary: #e2d6be;
+    --text-secondary: #b5a892;
+    --text-muted: #847a6c;
     --accent-red: #8b2d1a;
     --accent-gold: #c4a35a;
     --accent-gold-dim: #8a7a45;
@@ -32,11 +32,11 @@
   .site-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(2rem, 6vw, 3.6rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 2rem; text-shadow: 0 0 40px rgba(196, 163, 90, 0.1); }
   .site-epigraph { max-width: 640px; margin: 0 auto; font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; line-height: 1.9; color: var(--text-secondary); }
 
-  .session-nav { position: sticky; top: 0; z-index: 100; background: var(--bg-deep); border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+  .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .session-nav-inner { max-width: 800px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
   .session-nav-inner::-webkit-scrollbar { display: none; }
-  .nav-link { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; padding: 1rem 1.5rem; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
-  .nav-link:hover { color: var(--text-secondary); border-bottom-color: var(--border-warm); }
+  .nav-link { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); text-decoration: none; padding: 1rem 1.5rem; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
+  .nav-link:hover { color: var(--text-primary); border-bottom-color: var(--border-warm); }
   .nav-link.active { color: var(--accent-gold); border-bottom-color: var(--accent-red); }
 
   .content { max-width: 740px; margin: 0 auto; padding: 0 2rem; }
@@ -59,8 +59,8 @@
   .collector-question p { font-family: 'IM Fell English', serif; font-style: italic; color: var(--text-secondary); font-size: 1.05rem; line-height: 1.8; margin-bottom: 0; }
 
   .form-section { margin-top: 2rem; }
-  .form-toggle { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-gold-dim); background: none; border: 1px solid var(--border-warm); padding: 0.75rem 2rem; cursor: pointer; transition: all 0.3s ease; display: block; width: 100%; text-align: center; }
-  .form-toggle:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); background: rgba(196, 163, 90, 0.03); }
+  .form-toggle { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-gold); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.75rem 2rem; cursor: pointer; transition: all 0.3s ease; display: block; width: 100%; text-align: center; }
+  .form-toggle:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); background: #241f1a; }
   .form-toggle.open { border-bottom: none; color: var(--accent-gold); }
   .form-container { display: none; border: 1px solid var(--border-warm); border-top: none; background: var(--bg-card); overflow: hidden; }
   .form-container.visible { display: block; }
@@ -131,6 +131,95 @@
       <span class="session-number">Session 01</span>
       <h2 class="session-title">The Cliff and the Letter</h2>
       <div class="session-art">
+        <img src="session-01-art.png" alt="Session 01, The Cliff and the Letter">
+      </div>
+      <div class="session-body">
+        <p>Four hunters took a cliff face for a promise of coin and the head of a mountain troll. Not the worst reason to risk a fall.</p>
+        <p>The cave at the summit offered its own welcome, a den of Mawbs, feral and busy with a horse that had seen better days. Sticky and Croakelion stepped inside to investigate while Mai-amar held position at the mouth. A sensible enough arrangement, until the troll made its own introduction from behind.</p>
+        <p>What followed split into two fights the party may never fully reconcile. Sticky rushed to Mai-amar's side, and together the two of them brought the creature down, no small thing for a goblin and an elf against a mountain troll. Meanwhile, Croakelion conducted his own war underground, carving through Mawbs with a thoroughness that left remarkably little evidence. A fight no one else saw and few traces to prove it happened.</p>
+        <p>Battered, they made their way back toward Carrow. The road offered one oddity, a courier, old and unhurried, with no particular explanation for his presence. Then the familiar warmth of Cliff's tavern, payment for the job, and a name passed along: someone called the Tax Collector, looking for reliable hands.</p>
+        <p>The evening ended at Croakelion's hovel, generously self-titled a "mansion," beside Miss Mabel's, where a letter was waiting. Addressed to each of them. By name.</p>
+      </div>
+      <div class="collector-question">
+        <p>Your party just took a real beating for modest pay from a man they trust. Now a stranger who already knows their names is offering work. What is it about your character's life right now that makes them consider saying yes instead of walking away?</p>
+      </div>
+      <div class="form-section">
+        <button class="form-toggle" onclick="toggleForm(this)">Submit Your Answer</button>
+        <div class="form-container">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSeWN_MVtaRh4uzscuZnQqCxXcgQqL0hNrn5stHg8FDA_WTIQg/viewform?embedded=true" loading="lazy">Loading…</iframe>
+        </div>
+      </div>
+    </article>
+
+    <div class="divider">&middot; &middot; &middot;</div>
+
+    <!-- SESSION ZERO -->
+    <article class="session-entry reveal" id="session-00">
+      <span class="session-number">Session Zero</span>
+      <h2 class="session-title">The Professionals</h2>
+      <div class="session-body">
+        <p>Four hunters. Not chosen. Not destined. Simply good enough at dangerous work to still be alive, and smart enough to know that matters. They have bled together, argued over coin, shared bad food on worse roads, and learned when to trust each other's instincts without asking why. They are not friends by any simple definition. They are something more useful than that.</p>
+      </div>
+
+      <div class="character-card">
+        <div class="char-name">Croakelion</div>
+        <div class="char-desc">Kroaken Seraph. A towering amphibian figure who carries himself with the absolute conviction of divinity. He believes he is the sole Kroaken in existence, and his golden wings of light do little to discourage the assumption. Whether the gods agree with his self-appointment is a question he has not yet thought to ask.</div>
+      </div>
+      <div class="character-card">
+        <div class="char-name">Sticky</div>
+        <div class="char-desc">Goblin Wizard. Small, sharp, and half-trained by a forgetful mentor named Old Jack. What Sticky lacks in formal education he makes up for in the kind of reckless ingenuity that keeps a goblin alive long enough to become dangerous. The magic works. The theory behind it is another matter entirely.</div>
+      </div>
+      <div class="character-card">
+        <div class="char-name">Mai-amar</div>
+        <div class="char-desc">Elf Rogue. Raised by a circus troupe, orphaned by violence, taken in by those who chose to care. He moves like a performer and fights like someone who learned early that grace and survival are the same skill. There is a warmth to him that the work has not yet managed to reach.</div>
+      </div>
+      <div class="character-card">
+        <div class="char-name">Bannanas</div>
+        <div class="char-desc">Simiah Warrior. A natural climber with a prehensile tail and an approach to bounty hunting best described as enthusiastic. Quick hands, quicker feet, and the kind of confidence that comes from knowing there is always something higher to climb to.</div>
+      </div>
+
+      <div class="collector-question">
+        <p>Every hunter has a history before the hunt. The questions below are for those who wish to set theirs down in writing.</p>
+      </div>
+      <div class="form-section">
+        <button class="form-toggle" onclick="toggleForm(this)">Background Questions</button>
+        <div class="form-container">
+          <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfvry9TsK2e5UlYjZ_Lfk6HNXX3B5VuPGMPkdjqh8yNwIrkxA/viewform?embedded=true" loading="lazy">Loading…</iframe>
+        </div>
+      </div>
+    </article>
+
+  </main>
+
+  <footer class="site-footer">Leave nothing unrecorded</footer>
+
+  <script>
+    function toggleForm(btn) {
+      const container = btn.nextElementSibling;
+      const isOpen = container.classList.contains('visible');
+      container.classList.toggle('visible');
+      btn.classList.toggle('open');
+      const defaultLabel = btn.closest('#session-00') ? 'Background Questions' : 'Submit Your Answer';
+      btn.textContent = isOpen ? defaultLabel : 'Close';
+    }
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    const navLinks = document.querySelectorAll('.nav-link');
+    const navObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          navLinks.forEach(link => link.classList.remove('active'));
+          const activeLink = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+          if (activeLink) activeLink.classList.add('active');
+        }
+      });
+    }, { threshold: 0.3 });
+    document.querySelectorAll('.session-entry').forEach(section => navObserver.observe(section));
+  </script>
+</body>
+</html>iv class="session-art">
         <img src="session-01-art.png" alt="Session 01, The Cliff and the Letter">
       </div>
       <div class="session-body">
