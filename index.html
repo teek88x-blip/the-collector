@@ -50,7 +50,7 @@
 
   /* TICKER */
   .ticker { height: 36px; overflow: hidden; background: #141210; border-bottom: 1px solid var(--border-subtle); display: flex; align-items: center; justify-content: center; position: relative; }
-  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); position: absolute; opacity: 0; transform: translateY(14px); transition: none; }
+  .ticker-text { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); position: absolute; opacity: 0; transform: translateY(14px); transition: none; }
   .ticker-text.visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
   .ticker-text.out { opacity: 0; transform: translateY(-14px); transition: opacity 0.4s ease, transform 0.4s ease; }
 
@@ -363,7 +363,7 @@
         <h2 class="contract-title">Gorvak</h2>
         <span class="contract-status status-active">Active</span>
         <div class="contract-art">
-          <!-- <img src="contract-01.png" alt="Contract 01, Gorvak"> -->
+          <img src="contract-01.png" alt="Contract 01, Gorvak">
         </div>
         <div class="contract-body">
           <p>Details to follow.</p>
@@ -398,9 +398,13 @@
       </article>
       -->
 
-      <div class="empty-state">
-        No handouts have been filed yet. In time, there will be much to revisit.
-      </div>
+      <article class="handout-entry">
+        <span class="handout-session">Session 01</span>
+        <h2 class="handout-title">The Collector's First Letter</h2>
+        <div class="handout-art">
+          <img src="handout-01.png" alt="The Collector's First Letter">
+        </div>
+      </article>
 
     </main>
   </div>
