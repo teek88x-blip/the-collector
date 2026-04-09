@@ -20,36 +20,16 @@
     --accent-gold: #c4a35a;
     --accent-gold-dim: #8a7a45;
     --shadow-warm: rgba(139, 45, 26, 0.08);
+    @keyframes vertical-loop {
+  0%   { transform: translateY(0); }
+  100% { transform: translateY(-50%); }
+}
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-warm) var(--bg-deep); }
   body { background: var(--bg-deep); color: var(--text-primary); font-family: 'Crimson Text', Georgia, serif; font-size: 18px; line-height: 1.75; min-height: 100vh; overflow-x: hidden; }
   body::before { content: ''; position: fixed; inset: 0; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
 
-  /* TICKER */
-  <div style="height: 50px; overflow: hidden; background:#1a1714; color:#b5a892; font-family: 'Crimson Text', Georgia, serif;">
-  <div style="display: inline-block; animation: vertical-loop 12s linear infinite;">
-    
-    <!-- ORIGINAL CONTENT -->
-    <div style="padding: 10px;">🔥 Welcome to the site!</div>
-    <div style="padding: 10px;">✨ New updates live now</div>
-    <div style="padding: 10px;">🚀 Check out our latest features</div>
-    <div style="padding: 10px;">💡 Stay tuned for more</div>
-
-    <!-- DUPLICATE CONTENT (required for seamless loop) -->
-    <div style="padding: 10px;">🔥 Welcome to the site!</div>
-    <div style="padding: 10px;">✨ New updates live now</div>
-    <div style="padding: 10px;">🚀 Check out our latest features</div>
-    <div style="padding: 10px;">💡 Stay tuned for more</div>
-
-  </div>
-</div>
-
-<style id="7f3nkp">
-@keyframes vertical-loop {
-  0%   { transform: translateY(0); }
-  100% { transform: translateY(-50%); }
-  
   /* HEADER */
   .site-header { text-align: center; padding: 6rem 2rem 4rem; position: relative; border-bottom: 1px solid var(--border-subtle); cursor: pointer; }
   .site-header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 120px; height: 1px; background: var(--accent-red); box-shadow: 0 0 20px var(--shadow-warm); }
@@ -216,7 +196,24 @@
       <span class="nav-link" data-tab="handouts" onclick="switchTab('handouts')">Handouts</span>
     </div>
   </nav>
- 
+
+  <div style="height: 42px; overflow: hidden; background:#141210; color:#c4a35a; font-family: 'Cinzel', serif; border-bottom: 1px solid #2a2520;">
+  <div style="display: inline-block; animation: vertical-loop 14s linear infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase;">
+    
+    <!-- ORIGINAL -->
+    <div style="padding: 10px 0;">A contract has been accepted</div>
+    <div style="padding: 10px 0;">The Collector is watching</div>
+    <div style="padding: 10px 0;">Payment is promised, not guaranteed</div>
+    <div style="padding: 10px 0;">Some debts are not measured in coin</div>
+
+    <!-- DUPLICATE (required) -->
+    <div style="padding: 10px 0;">A contract has been accepted</div>
+    <div style="padding: 10px 0;">The Collector is watching</div>
+    <div style="padding: 10px 0;">Payment is promised, not guaranteed</div>
+    <div style="padding: 10px 0;">Some debts are not measured in coin</div>
+
+  </div>
+</div>
  
   <!-- ============================================ -->
   <!-- TAB: SESSIONS                                -->
