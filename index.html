@@ -24,10 +24,9 @@
 
 .ticker-container {
   position: relative;
-  height: 44px;             /* visible area */
+  height: 44px;
   overflow: hidden;
   background: #141210;
-  color: #c4a35a;
   font-family: 'Cinzel', serif;
   border-bottom: 1px solid #2a2520;
   text-align: center;
@@ -44,13 +43,15 @@
   opacity: 0;
   padding: 12px 0;
   line-height: 20px;
-  animation: fade-shimmer 16s infinite;
   
-  /* shimmer effect */
+  /* Shimmer effect */
   background: linear-gradient(90deg, #c4a35a, #fff, #c4a35a);
+  background-size: 200% 100%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+
+  animation: fade-shimmer 16s linear infinite;
 }
 
 .ticker-item:nth-child(1) { animation-delay: 0s; }
@@ -63,12 +64,8 @@
   25%, 50%  { opacity: 1; }
   55%, 100% { opacity: 0; }
 
-  25%, 50% {
-    background-position: -200% 0;  /* shimmer slide start */
-  }
-  50% {
-    background-position: 200% 0;   /* shimmer slide end */
-  }
+  25% { background-position: -200% 0; }
+  50% { background-position: 200% 0; }
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
