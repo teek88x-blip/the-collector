@@ -23,28 +23,11 @@
   }
 
 @keyframes vertical-step {
-  0%   { transform: translateY(0%); }
-  12%  { transform: translateY(0%); }
-
-  15%  { transform: translateY(-12.5%); }
-  27%  { transform: translateY(-12.5%); }
-
-  30%  { transform: translateY(-25%); }
-  42%  { transform: translateY(-25%); }
-
-  45%  { transform: translateY(-37.5%); }
-  57%  { transform: translateY(-37.5%); }
-
-  60%  { transform: translateY(-50%); }
-  72%  { transform: translateY(-50%); }
-
-  75%  { transform: translateY(-62.5%); }
-  87%  { transform: translateY(-62.5%); }
-
-  90%  { transform: translateY(-75%); }
-  97%  { transform: translateY(-75%); }
-
-  100% { transform: translateY(-87.5%); }
+  0%, 12.5%   { transform: translateY(0px); }
+  25%, 37.5%  { transform: translateY(-36px); }
+  50%, 62.5%  { transform: translateY(-72px); }
+  75%, 87.5%  { transform: translateY(-108px); }
+  100%        { transform: translateY(-144px); }
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -219,22 +202,19 @@
     </div>
   </nav>
 
-  <div style="height: 36px; overflow: hidden; background:#141210; color:#c4a35a; font-family: 'Cinzel', serif; border-bottom: 1px solid #2a2520;position: relative;
-  mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);
-  -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);">
-  <div style="display: inline-block; animation: vertical-step 16s ease-in-out infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase;">
+<div style="height: 36px; overflow: hidden; background:#141210; color:#c4a35a; font-family: 'Cinzel', serif; border-bottom: 1px solid #2a2520; position: relative; mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);">
+  <div style="display: inline-block; animation: vertical-step 16s ease-in-out infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase; transform: translateZ(0); backface-visibility: hidden;">
     
-    <!-- ORIGINAL -->
-    <div style="padding: 8px 0;">A contract has been accepted</div>
-    <div style="padding: 8px 0;">Gorvak spotted in village market</div>
-    <div style="padding: 8px 0;">Troll defeated on Carrow trade road</div>
-    <div style="padding: 8px 0;">BEWARE: Large Ribbet licking strangers</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">A contract has been accepted</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">Gorvak spotted in village market</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">Troll defeated on Carrow trade road</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">BEWARE: Large Ribbet licking strangers</div>
 
-    <!-- DUPLICATE (required) -->
-    <div style="padding: 8px 0;">A contract has been accepted</div>
-    <div style="padding: 8px 0;">Gorvak spotted in village market</div>
-    <div style="padding: 8px 0;">Troll defeated on Carrow trade road</div>
-    <div style="padding: 8px 0;">BEWARE: Large Ribbet licking strangers</div>
+    <!-- DUPLICATE -->
+    <div style="height:28px; padding:4px 0; line-height:28px;">A contract has been accepted</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">Gorvak spotted in village market</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">Troll defeated on Carrow trade road</div>
+    <div style="height:28px; padding:4px 0; line-height:28px;">BEWARE: Large Ribbet licking strangers</div>
 
   </div>
 </div>
