@@ -22,16 +22,53 @@
     --shadow-warm: rgba(139, 45, 26, 0.08);
   }
 
-@keyframes vertical-step {
-  0%, 6.25%    { transform: translateY(0px); }      /* 1st item visible */
-  12.5%, 18.75% { transform: translateY(-36px); }   /* 2nd item */
-  25%, 31.25%   { transform: translateY(-72px); }   /* 3rd item */
-  37.5%, 43.75% { transform: translateY(-108px); }  /* 4th item */
-  50%, 56.25%   { transform: translateY(-144px); }  /* 5th item (1st duplicate) */
-  62.5%, 68.75% { transform: translateY(-180px); }  /* 6th item (2nd duplicate) */
-  75%, 81.25%   { transform: translateY(-216px); }  /* 7th item */
-  87.5%, 93.75% { transform: translateY(-252px); }  /* 8th item */
-  100%          { transform: translateY(-288px); }  /* loop back */
+.ticker-container {
+  position: relative;
+  height: 44px;             /* visible area */
+  overflow: hidden;
+  background: #141210;
+  color: #c4a35a;
+  font-family: 'Cinzel', serif;
+  border-bottom: 1px solid #2a2520;
+  text-align: center;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.ticker-item {
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  padding: 12px 0;
+  line-height: 20px;
+  animation: fade-shimmer 16s infinite;
+  
+  /* shimmer effect */
+  background: linear-gradient(90deg, #c4a35a, #fff, #c4a35a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.ticker-item:nth-child(1) { animation-delay: 0s; }
+.ticker-item:nth-child(2) { animation-delay: 4s; }
+.ticker-item:nth-child(3) { animation-delay: 8s; }
+.ticker-item:nth-child(4) { animation-delay: 12s; }
+
+@keyframes fade-shimmer {
+  0%, 20%   { opacity: 0; }
+  25%, 50%  { opacity: 1; }
+  55%, 100% { opacity: 0; }
+
+  25%, 50% {
+    background-position: -200% 0;  /* shimmer slide start */
+  }
+  50% {
+    background-position: 200% 0;   /* shimmer slide end */
+  }
 }
   
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -206,21 +243,11 @@
     </div>
   </nav>
 
-<div style="height: 36px; overflow: hidden; background:#141210; color:#c4a35a; font-family: 'Cinzel', serif; border-bottom: 1px solid #2a2520; position: relative; mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 25%, black 75%, transparent);">
-  <div style="display: inline-block; animation: vertical-step 16s ease-in-out infinite; width: 100%; text-align: center; letter-spacing: 0.1em; font-size: 0.7rem; text-transform: uppercase; transform: translateZ(0); backface-visibility: hidden;">
-    
-    <div style="height:28px; padding:4px 0; line-height:28px;">A contract has been accepted</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">Gorvak spotted in village market</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">Troll defeated on Carrow trade road</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">BEWARE: Large Ribbet licking strangers</div>
-
-    <!-- DUPLICATE -->
-    <div style="height:28px; padding:4px 0; line-height:28px;">A contract has been accepted</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">Gorvak spotted in village market</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">Troll defeated on Carrow trade road</div>
-    <div style="height:28px; padding:4px 0; line-height:28px;">BEWARE: Large Ribbet licking strangers</div>
-
-  </div>
+<div class="ticker-container">
+  <div class="ticker-item">A contract has been accepted</div>
+  <div class="ticker-item">Gorvak spotted in village market</div>
+  <div class="ticker-item">Troll defeated on Carrow trade road</div>
+  <div class="ticker-item">BEWARE: Large Ribbet licking strangers</div>
 </div>
  
   <!-- ============================================ -->
