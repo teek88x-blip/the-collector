@@ -160,8 +160,10 @@
   .map-pin:hover .map-pin-dot { transform: scale(1.4); box-shadow: 0 0 12px rgba(196, 163, 90, 0.4); }
   .map-pin-dot.visited { background: var(--accent-gold); border-color: #0a0908; }
   .map-pin-dot.unknown { background: var(--text-muted); border-color: var(--border-warm); }
-  .map-tooltip { display: none; position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.6rem 1rem; white-space: nowrap; z-index: 20; pointer-events: none; }
+  .map-tooltip { display: none; position: absolute; bottom: 24px; left: 50%; transform: translateX(-50%); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.6rem 1rem; white-space: normal; min-width: 180px; max-width: 220px; z-index: 20; pointer-events: none; }
   .map-pin:hover .map-tooltip, .map-pin.active .map-tooltip { display: block; }
+  .map-pin.pin-left .map-tooltip { left: 0; transform: none; }
+  .map-pin.pin-right .map-tooltip { left: auto; right: 0; transform: none; }
   .map-tooltip-name { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold); margin-bottom: 0.2rem; }
   .map-tooltip-desc { font-family: 'Crimson Text', serif; font-size: 0.8rem; color: var(--text-secondary); }
   .map-legend { max-width: 900px; margin: 1.5rem auto; padding: 0 1rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap; }
@@ -229,7 +231,7 @@
     <div class="session-nav-inner">
       <span class="nav-link active" data-tab="sessions" onclick="switchTab('sessions')">Sessions</span>
       <span class="nav-link" data-tab="contracts" onclick="switchTab('contracts')">Contracts</span>
-      <span class="nav-link" data-tab="handouts" onclick="switchTab('handouts')">Files</span>
+      <span class="nav-link" data-tab="handouts" onclick="switchTab('handouts')">Handouts</span>
       <span class="nav-link" data-tab="map" onclick="switchTab('map')">Map</span>
       <span class="nav-link" data-tab="shop" onclick="switchTab('shop')">Shop</span>
     </div>
@@ -395,7 +397,7 @@
   <div class="tab-panel" id="tab-handouts">
 
     <header class="page-header">
-      <h2 class="page-title">Files</h2>
+      <h2 class="page-title">Handouts</h2>
       <p class="page-subtitle">Correspondence, dossiers, and other documents that have passed through your hands. Kept here for reference. Read them again if you must, but read them carefully.</p>
     </header>
 
@@ -446,7 +448,7 @@
       <img src="map.png" alt="Region Map">
 
       <!-- CARROW -->
-      <div class="map-pin" style="left:49%;top:49%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin" style="left:49%;top:49%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">Carrow</div>
           <div class="map-tooltip-desc">Home base. Cliff's tavern, Miss Mabel's, the Chandler's shop.</div>
@@ -455,7 +457,7 @@
       </div>
 
       <!-- IRONPEAK FORTRESS -->
-      <div class="map-pin" style="left:31.5%;top:23%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin" style="left:31.5%;top:23%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">Ironpeak Fortress</div>
           <div class="map-tooltip-desc">Gorvak's stronghold. Northern mountains. Active contract.</div>
@@ -464,7 +466,7 @@
       </div>
 
       <!-- OLD BATTLEFIELD -->
-      <div class="map-pin" style="left:84%;top:55%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin pin-right" style="left:84%;top:55%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">The Old Battlefield</div>
           <div class="map-tooltip-desc">Crossed swords mark a place of forgotten dead.</div>
@@ -473,7 +475,7 @@
       </div>
 
       <!-- SORROWING HILLS
-      <div class="map-pin" style="left:84%;top:79%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin pin-right" style="left:84%;top:79%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">The Sorrowing Hills</div>
           <div class="map-tooltip-desc">A records archive of some kind. Little else is known.</div>
@@ -482,7 +484,7 @@
       </div> -->
 
       <!-- PORT -->
-      <div class="map-pin" style="left:65%;top:80%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin" style="left:65%;top:80%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">Harbour Town</div>
           <div class="map-tooltip-desc">A working port on the southern coast.</div>
@@ -491,7 +493,7 @@
       </div>
 
       <!-- MIRE / MARSH -->
-      <div class="map-pin" style="left:25%;top:68%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin pin-left" style="left:25%;top:68%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">The Mire</div>
           <div class="map-tooltip-desc">Marshland. Locals avoid it after dark.</div>
@@ -500,7 +502,7 @@
       </div>
 
       <!-- UNASSIGNED CAVE -->
-      <div class="map-pin" style="left:21%;top:35%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin pin-left" style="left:21%;top:35%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">???</div>
           <div class="map-tooltip-desc">A cave entrance in the western cliffs. Purpose unknown.</div>
@@ -509,7 +511,7 @@
       </div>
 
       <!-- UNASSIGNED CASTLE -->
-      <div class="map-pin" style="left:71%;top:41%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin" style="left:71%;top:41%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">???</div>
           <div class="map-tooltip-desc">A fortified settlement deep in the eastern forests.</div>
@@ -518,7 +520,7 @@
       </div>
 
       <!-- MINING TOWN -->
-      <div class="map-pin" style="left:58%;top:15%;" onclick="this.classList.toggle('active')">
+      <div class="map-pin" style="left:58%;top:15%;">
         <div class="map-tooltip">
           <div class="map-tooltip-name">???</div>
           <div class="map-tooltip-desc">A mining town deep in the Greypeak Range.</div>
@@ -955,6 +957,22 @@
             <div class="shop-item-price">1 Handful</div>
           </div>
 
+          <div class="shop-item">
+            <div class="shop-item-info">
+              <div class="shop-item-name">Grindletooth Venom</div>
+              <div class="shop-item-stats">Apply to a physical weapon to add d6 to your next damage roll</div>
+            </div>
+            <div class="shop-item-price">2 Handfuls</div>
+          </div>
+
+          <div class="shop-item">
+            <div class="shop-item-info">
+              <div class="shop-item-name">Varik Leaves</div>
+              <div class="shop-item-stats">Eat to immediately gain 2 Hope</div>
+            </div>
+            <div class="shop-item-price">2 Handfuls</div>
+          </div>
+
         </div>
       </div>
 
@@ -1027,7 +1045,23 @@
             <div class="shop-item-price">2 Handfuls</div>
           </div>
 
-       </div>
+          <div class="shop-item">
+            <div class="shop-item-info">
+              <div class="shop-item-name">Fire Jar</div>
+              <div class="shop-item-feature">Pour to instantly produce fire. Contents regenerate on a long rest</div>
+            </div>
+            <div class="shop-item-price">2 Handfuls</div>
+          </div>
+
+          <div class="shop-item">
+            <div class="shop-item-info">
+              <div class="shop-item-name">Suspended Rod</div>
+              <div class="shop-item-feature">Activate to suspend in place. Cannot move, ignores gravity until deactivated</div>
+            </div>
+            <div class="shop-item-price">3 Handfuls</div>
+          </div>
+
+        </div>
       </div>
 
     </main>
@@ -1084,6 +1118,16 @@
       if (!e.target.closest('.map-pin')) {
         document.querySelectorAll('.map-pin.active').forEach(p => p.classList.remove('active'));
       }
+    });
+
+    // Only one tooltip open at a time
+    document.querySelectorAll('.map-pin').forEach(pin => {
+      pin.addEventListener('click', function(e) {
+        e.stopPropagation();
+        const wasActive = this.classList.contains('active');
+        document.querySelectorAll('.map-pin.active').forEach(p => p.classList.remove('active'));
+        if (!wasActive) this.classList.add('active');
+      });
     });
     // Ticker
     const tickerMessages = [
