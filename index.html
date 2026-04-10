@@ -54,6 +54,27 @@
   .ticker-text.visible { opacity: 1; transform: translateY(0); transition: opacity 0.5s ease, transform 0.5s ease; }
   .ticker-text.out { opacity: 0; transform: translateY(-14px); transition: opacity 0.4s ease, transform 0.4s ease; }
 
+  /* DICE ROLLER */
+  .dice-btn { position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 200; font-family: 'Cinzel', serif; font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent-gold-dim); background: var(--bg-card); border: 1px solid var(--border-warm); padding: 0.6rem 1.2rem; cursor: pointer; transition: all 0.3s ease; }
+  .dice-btn:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); }
+  .dice-btn.open { color: var(--accent-gold); border-color: var(--accent-gold); }
+  .dice-panel { display: none; position: fixed; bottom: 4rem; left: 1.5rem; z-index: 200; background: var(--bg-card); border: 1px solid var(--border-warm); padding: 1.2rem; width: 210px; }
+  .dice-panel.show { display: block; animation: eggFadeIn 0.3s ease; }
+  .dice-panel-title { font-family: 'Cinzel', serif; font-size: 0.55rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.8rem; text-align: center; }
+  .dice-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.4rem; margin-bottom: 0.8rem; }
+  .dice-die { font-family: 'Cinzel', serif; font-size: 0.7rem; font-weight: 700; color: var(--text-secondary); background: none; border: 1px solid var(--border-subtle); padding: 0.5rem; cursor: pointer; text-align: center; transition: all 0.2s ease; }
+  .dice-die:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); background: rgba(196,163,90,0.05); }
+  .dice-duality { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; color: var(--accent-gold-dim); background: none; border: 1px solid var(--border-warm); padding: 0.5rem; cursor: pointer; text-align: center; width: 100%; transition: all 0.2s ease; letter-spacing: 0.1em; text-transform: uppercase; }
+  .dice-duality:hover { color: var(--accent-gold); border-color: var(--accent-gold-dim); background: rgba(196,163,90,0.05); }
+  .dice-result { text-align: center; min-height: 2.8rem; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+  .dice-result-number { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 700; color: var(--accent-gold); line-height: 1; }
+  .dice-result-label { font-family: 'Cinzel', serif; font-size: 0.5rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); margin-top: 0.3rem; }
+  .dice-result-hope { color: #7ab87a; }
+  .dice-result-fear { color: var(--accent-red); }
+  .dice-result-crit { color: var(--accent-gold); }
+  .dice-roll-anim { animation: diceRoll 0.3s ease; }
+  @keyframes diceRoll { 0% { transform: scale(0.5); opacity: 0; } 50% { transform: scale(1.2); } 100% { transform: scale(1); opacity: 1; } }
+
   /* NAV */
   .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
   .session-nav-inner { max-width: 800px; margin: 0 auto; display: flex; justify-content: center; gap: 0; overflow-x: auto; scrollbar-width: none; }
@@ -182,7 +203,7 @@
   .easter-egg-message { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.2rem; color: var(--text-primary); text-align: center; max-width: 480px; padding: 0 2rem; line-height: 1.9; opacity: 0; animation: eggTextIn 1.5s ease 0.5s forwards; }
   .easter-egg-reward { font-family: 'Cinzel', serif; font-size: 0.65rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent-red); text-shadow: 0 0 6px rgba(139,45,26,0.6), 0 0 20px rgba(0,0,0,0.9); text-align: center; margin-top: 1.5rem; opacity: 0; animation: eggTextIn 1s ease 2.5s forwards; }
   .easter-egg-reward-desc { font-family: 'Crimson Text', serif; font-size: 0.95rem; color: var(--text-secondary); text-align: center; max-width: 400px; padding: 0 2rem; margin-top: 0.75rem; line-height: 1.7; opacity: 0; animation: eggTextIn 1s ease 3.2s forwards; }
-  .easter-egg-close { font-family: 'Cinzel', serif; font-size: 0.75rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0908; margin-top: 2.5rem; cursor: pointer; opacity: 0; animation: eggTextIn 0.5s ease 4s forwards; border: 1px solid var(--accent-gold); padding: 0.5rem 1.5rem; background: var(--accent-gold); transition: background 0.3s ease; }
+  .easter-egg-close { font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.2em; text-transform: uppercase; color: #0a0908; margin-top: 2.5rem; cursor: pointer; opacity: 0; animation: eggTextIn 0.5s ease 4s forwards; border: 1px solid var(--accent-gold); padding: 0.5rem 1.5rem; background: var(--accent-gold); transition: background 0.3s ease; }
   .easter-egg-close:hover { background: #d4b76a; }
   @keyframes eggFadeIn { from { opacity: 0; } to { opacity: 1; } }
   @keyframes eggTextIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -195,6 +216,8 @@
     .character-card { padding: 1.25rem 1.5rem; }
     .nav-link { padding: 0.8rem 1rem; font-size: 0.6rem; }
     .audio-toggle { bottom: 1rem; right: 1rem; padding: 0.5rem 0.8rem; font-size: 0.55rem; }
+    .dice-btn { bottom: 1rem; left: 1rem; padding: 0.5rem 0.8rem; font-size: 0.55rem; }
+    .dice-panel { bottom: 3.5rem; left: 1rem; }
     .archive-item-header { padding: 1rem 1.25rem; }
     .archive-item-content { padding: 0 1.25rem 2rem; }
     .page-header { padding: 3rem 1.5rem 2.5rem; }
@@ -230,6 +253,21 @@
     <div class="audio-bars"><span></span><span></span><span></span></div>
     <span id="audioLabel">Listen</span>
   </button>
+
+  <button class="dice-btn" id="diceBtn" onclick="toggleDice()">&#x2684; Roll</button>
+  <div class="dice-panel" id="dicePanel">
+    <div class="dice-panel-title">Dice Roller</div>
+    <div class="dice-grid">
+      <button class="dice-die" onclick="rollDie(4)">d4</button>
+      <button class="dice-die" onclick="rollDie(6)">d6</button>
+      <button class="dice-die" onclick="rollDie(8)">d8</button>
+      <button class="dice-die" onclick="rollDie(10)">d10</button>
+      <button class="dice-die" onclick="rollDie(12)">d12</button>
+      <button class="dice-die" onclick="rollDie(20)">d20</button>
+    </div>
+    <button class="dice-duality" onclick="rollDuality()">Hope &amp; Fear</button>
+    <div class="dice-result" id="diceResult"></div>
+  </div>
 
   <header class="site-header" onclick="switchTab('sessions')">
     <div class="header-ornament">&#x2B25; &#x2B25; &#x2B25;</div>
@@ -1204,6 +1242,41 @@
     }
     updateCountdown();
     setInterval(updateCountdown, 60000);
+    // Dice roller
+    function toggleDice() {
+      document.getElementById('dicePanel').classList.toggle('show');
+      document.getElementById('diceBtn').classList.toggle('open');
+    }
+    function rollDie(sides) {
+      const result = Math.floor(Math.random() * sides) + 1;
+      const el = document.getElementById('diceResult');
+      el.innerHTML = '<div class="dice-result-number dice-roll-anim">' + result + '</div><div class="dice-result-label">d' + sides + '</div>';
+    }
+    function rollDuality() {
+      const hope = Math.floor(Math.random() * 12) + 1;
+      const fear = Math.floor(Math.random() * 12) + 1;
+      const el = document.getElementById('diceResult');
+      const total = hope + fear;
+      let label, cls;
+      if (hope === fear) {
+        label = 'Critical Success (' + hope + ' & ' + fear + ')';
+        cls = 'dice-result-crit';
+      } else if (hope > fear) {
+        label = 'With Hope (' + hope + ' + ' + fear + ')';
+        cls = 'dice-result-hope';
+      } else {
+        label = 'With Fear (' + fear + ' + ' + hope + ')';
+        cls = 'dice-result-fear';
+      }
+      el.innerHTML = '<div class="dice-result-number dice-roll-anim ' + cls + '">' + total + '</div><div class="dice-result-label">' + label + '</div>';
+    }
+    document.addEventListener('click', function(e) {
+      if (!e.target.closest('#dicePanel') && !e.target.closest('#diceBtn')) {
+        document.getElementById('dicePanel').classList.remove('show');
+        document.getElementById('diceBtn').classList.remove('open');
+      }
+    });
+
     // Easter egg - tap footer 5 times
     let footerTaps = 0;
     let footerTimer = null;
