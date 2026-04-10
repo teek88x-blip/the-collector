@@ -228,6 +228,16 @@
     .handout-text { padding: 1.5rem; }
     .tracker { gap: 2rem; }
   }
+  /* ENCRYPTED FRAGMENT */
+  .fragment-entry { padding: 4rem 0; border-bottom: 1px solid var(--border-subtle); }
+  .fragment-header { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+  .fragment-subheader { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--border-warm); margin-bottom: 2rem; }
+  .fragment-text { font-family: 'IM Fell English', serif; font-size: 1.15rem; line-height: 2.2; color: var(--text-primary); padding: 2rem 2.5rem; background: var(--bg-card); border-left: 2px solid var(--border-warm); position: relative; }
+  .fragment-text::before { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2.4em, rgba(42,37,32,0.3) 2.4em, rgba(42,37,32,0.3) 2.45em); pointer-events: none; }
+  .frag-blocked { color: var(--border-subtle); background: var(--border-subtle); border-radius: 2px; padding: 0 2px; user-select: none; cursor: default; }
+  .frag-revealed { color: var(--text-primary); transition: color 1s ease; }
+  .frag-punct { color: var(--text-muted); }
+
   /* SHOP */
   .shop-filters { display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; padding: 2rem 1rem 1rem; }
   .shop-filter { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-muted); background: none; border: 1px solid var(--border-subtle); padding: 0.5rem 1rem; cursor: pointer; transition: all 0.2s ease; }
@@ -472,6 +482,13 @@
         <div class="handout-art">
           <img src="handout-01.png" alt="The Collector's First Letter">
         </div>
+      </article>
+
+      <!-- ENCRYPTED FRAGMENT -->
+      <article class="fragment-entry">
+        <div class="fragment-header">Recovered Fragment — Origin Unknown</div>
+        <div class="fragment-subheader">Partial text. Source unverified. Damage extensive.</div>
+        <div class="fragment-text" id="fragmentText"></div>
       </article>
 
     </main>
@@ -1279,6 +1296,38 @@
         document.getElementById('diceBtn').classList.remove('open');
       }
     });
+
+    // Encrypted fragment
+    (function() {
+      // THE FULL MESSAGE - each word is an element in this array
+      const words = [
+        'I','stopped','using','my','name','seventeen','years','ago.',
+        'What','I','do','requires','that','no','one','connects','the','man','to','the','work.',
+        'The','gallery','exists','because','I','exist.',
+        'When','I','am','gone,','it','will','open,','and','everything','I','have','held','back','will','feed.'
+      ];
+
+      // REVEALED WORD INDICES - add numbers here each session to reveal more words
+      // Session 2: just "I", "the", "to", "and" - the most innocuous words
+      const revealed = [0, 9, 16, 19, 25, 28, 35];
+
+      const el = document.getElementById('fragmentText');
+      let html = '';
+      words.forEach(function(word, i) {
+        const isPunct = /[.,;:!?]$/.test(word);
+        const cleanWord = word.replace(/[.,;:!?]/g, '');
+        const punct = word.slice(cleanWord.length);
+        if (revealed.includes(i)) {
+          html += '<span class="frag-revealed">' + cleanWord + '</span>';
+        } else {
+          const block = '█'.repeat(cleanWord.length);
+          html += '<span class="frag-blocked">' + block + '</span>';
+        }
+        if (punct) html += '<span class="frag-punct">' + punct + '</span>';
+        html += ' ';
+      });
+      el.innerHTML = html;
+    })();
 
     // Visitor counter
     (function() {
