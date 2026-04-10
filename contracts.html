@@ -3,10 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Contracts — The Tax Collector</title>
+<title>The Tax Collector — Connections</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
 <style>
   :root {
     --bg-deep: #0a0908;
@@ -19,114 +20,340 @@
     --accent-red: #8b2d1a;
     --accent-gold: #c4a35a;
     --accent-gold-dim: #8a7a45;
-    --shadow-warm: rgba(139, 45, 26, 0.08);
+    --cat-party: #c4a35a;
+    --cat-collector: #8b2d1a;
+    --cat-carrow: #7a9a6e;
+    --cat-target: #a33d28;
+    --cat-other: #6b6155;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
-  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-warm) var(--bg-deep); }
-  body { background: var(--bg-deep); color: var(--text-primary); font-family: 'Crimson Text', Georgia, serif; font-size: 18px; line-height: 1.75; min-height: 100vh; overflow-x: hidden; }
+  html, body { width: 100%; height: 100%; overflow: hidden; }
+  body { background: var(--bg-deep); color: var(--text-primary); font-family: 'Crimson Text', Georgia, serif; }
   body::before { content: ''; position: fixed; inset: 0; opacity: 0.03; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E"); pointer-events: none; z-index: 9999; }
- 
-  .site-header { text-align: center; padding: 6rem 2rem 4rem; position: relative; border-bottom: 1px solid var(--border-subtle); }
-  .site-header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 120px; height: 1px; background: var(--accent-red); box-shadow: 0 0 20px var(--shadow-warm); }
-  .header-ornament { color: var(--text-muted); font-size: 1.4rem; letter-spacing: 1.2em; margin-bottom: 1.5rem; font-family: 'Cinzel', serif; }
-  .site-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(2rem, 6vw, 3.6rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 2rem; text-shadow: 0 0 40px rgba(196, 163, 90, 0.1); }
-  .site-title a { color: inherit; text-decoration: none; }
-  .site-epigraph { max-width: 640px; margin: 0 auto; font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; line-height: 1.9; color: var(--text-secondary); }
- 
-  .session-nav { position: sticky; top: 0; z-index: 100; background: #141210; border-bottom: 1px solid var(--border-subtle); padding: 0 2rem; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-  .session-nav-inner { max-width: 800px; margin: 0 auto; display: flex; gap: 0; overflow-x: auto; scrollbar-width: none; }
-  .session-nav-inner::-webkit-scrollbar { display: none; }
-  .nav-link { font-family: 'Cinzel', serif; font-size: 0.7rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-secondary); text-decoration: none; padding: 1rem 1.5rem; white-space: nowrap; border-bottom: 2px solid transparent; transition: all 0.3s ease; }
-  .nav-link:hover { color: var(--text-primary); border-bottom-color: var(--border-warm); }
-  .nav-link.active { color: var(--accent-gold); border-bottom-color: var(--accent-red); }
- 
-  .content { max-width: 740px; margin: 0 auto; padding: 0 2rem; }
- 
-  .page-header { text-align: center; padding: 4rem 2rem 3rem; border-bottom: 1px solid var(--border-subtle); position: relative; }
-  .page-header::after { content: ''; position: absolute; bottom: -1px; left: 50%; transform: translateX(-50%); width: 80px; height: 1px; background: var(--accent-red); }
-  .page-title { font-family: 'Cinzel', serif; font-weight: 700; font-size: clamp(1.6rem, 5vw, 2.4rem); letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-primary); margin-bottom: 1.5rem; }
-  .page-subtitle { font-family: 'IM Fell English', serif; font-style: italic; font-size: 1.05rem; color: var(--text-secondary); max-width: 560px; margin: 0 auto; line-height: 1.8; }
- 
-  .tracker { display: flex; justify-content: center; gap: 3rem; padding: 2.5rem 2rem; border-bottom: 1px solid var(--border-subtle); }
-  .tracker-stat { text-align: center; }
-  .tracker-value { font-family: 'Cinzel', serif; font-size: 2rem; font-weight: 700; color: var(--accent-gold); display: block; }
-  .tracker-label { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); }
- 
-  .contract-entry { padding: 4rem 0; border-bottom: 1px solid var(--border-subtle); }
-  .contract-entry:last-child { border-bottom: none; }
-  .contract-number { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-red); margin-bottom: 0.75rem; display: block; }
-  .contract-title { font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(1.2rem, 3.5vw, 1.6rem); color: var(--text-primary); margin-bottom: 1rem; letter-spacing: 0.05em; }
-  .contract-status { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; display: inline-block; padding: 0.25rem 0.75rem; margin-bottom: 2rem; }
-  .status-active { color: var(--accent-gold); border: 1px solid var(--accent-gold-dim); background: rgba(196, 163, 90, 0.08); }
-  .status-complete { color: var(--text-muted); border: 1px solid var(--border-subtle); }
-  .status-pending { color: var(--accent-red); border: 1px solid var(--accent-red); background: rgba(139, 45, 26, 0.08); }
-  .contract-art { margin-bottom: 2rem; border: 1px solid var(--border-subtle); overflow: hidden; }
-  .contract-art img { width: 100%; display: block; opacity: 0.9; transition: opacity 0.4s ease; }
-  .contract-art img:hover { opacity: 1; }
-  .contract-body p { margin-bottom: 1.2rem; color: var(--text-secondary); font-size: 1.05rem; }
- 
-  .site-footer { text-align: center; padding: 4rem 2rem; color: var(--text-muted); font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.3em; text-transform: uppercase; }
- 
+
+  .page-title-bar { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10,9,8,0.9); backdrop-filter: blur(8px); border-bottom: 1px solid var(--border-subtle); padding: 0.8rem 2rem; display: flex; justify-content: space-between; align-items: center; }
+  .page-title-bar h1 { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text-primary); }
+  .page-title-bar a { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); text-decoration: none; transition: color 0.3s; }
+  .page-title-bar a:hover { color: var(--accent-gold); }
+
+  .legend { position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 100; display: flex; flex-direction: column; gap: 0.5rem; }
+  .legend-item { display: flex; align-items: center; gap: 0.5rem; font-family: 'Cinzel', serif; font-size: 0.55rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); }
+  .legend-dot { width: 10px; height: 10px; border-radius: 50%; }
+
+  .tooltip { position: fixed; display: none; background: var(--bg-card); border-top: 1px solid var(--border-warm); padding: 1.2rem 1.5rem; left: 0; right: 0; bottom: 0; max-height: 45vh; overflow-y: auto; z-index: 200; }
+  .tooltip.show { display: block; animation: tooltipSlideUp 0.3s ease; }
+  @keyframes tooltipSlideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .tooltip-close { position: absolute; top: 0.8rem; right: 1rem; font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-muted); cursor: pointer; background: none; border: none; }
+  .tooltip-close:hover { color: var(--accent-gold); }
+  .tooltip-name { font-family: 'Cinzel', serif; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.1em; margin-bottom: 0.3rem; }
+  .tooltip-role { font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem; }
+  .tooltip-connections { font-family: 'Crimson Text', serif; font-size: 0.85rem; color: var(--text-muted); line-height: 1.6; }
+  .tooltip-conn-item { margin-bottom: 0.3rem; }
+  .tooltip-conn-name { color: var(--text-secondary); font-weight: 600; }
+
+  .link-label { position: fixed; display: none; background: rgba(26,23,20,0.95); border: 1px solid var(--border-warm); padding: 0.4rem 0.8rem; font-family: 'IM Fell English', serif; font-style: italic; font-size: 0.8rem; color: var(--text-secondary); white-space: nowrap; z-index: 150; pointer-events: none; transform: translate(-50%, -50%); }
+  .link-label.show { display: block; }
+
+  svg { width: 100%; height: 100%; }
+  .link { stroke: var(--border-warm); stroke-opacity: 0.4; fill: none; }
+  .link:hover { stroke-opacity: 0.8; stroke: var(--accent-gold-dim); }
+  .node-circle { stroke-width: 2; cursor: pointer; transition: filter 0.2s; }
+  .node-circle:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(196,163,90,0.3)); }
+  .node-label { font-family: 'Cinzel', serif; fill: var(--text-primary); text-anchor: middle; pointer-events: none; font-weight: 600; letter-spacing: 0.05em; }
+
   @media (max-width: 600px) {
-    .site-header { padding: 4rem 1.5rem 3rem; }
-    .page-header { padding: 3rem 1.5rem 2.5rem; }
-    .content { padding: 0 1.25rem; }
-    .contract-entry { padding: 3rem 0; }
-    .tracker { gap: 2rem; }
-    .nav-link { padding: 0.8rem 1rem; font-size: 0.6rem; }
+    .legend { bottom: 1rem; left: 1rem; }
+    .page-title-bar { padding: 0.6rem 1rem; }
+    .page-title-bar h1 { font-size: 0.65rem; }
   }
 </style>
 </head>
 <body>
- 
-  <header class="site-header">
-    <div class="header-ornament">&#x2B25; &#x2B25; &#x2B25;</div>
-    <h1 class="site-title"><a href="index.html">The Tax Collector</a></h1>
-    <p class="site-epigraph">Some work is done in daylight. Some is done by arrangement. You are here because someone thought you worth watching, and what was seen was promising. The records below are kept for your benefit. Read them carefully. Memory is a courtesy not everyone receives.</p>
-  </header>
- 
-  <nav class="session-nav">
-    <div class="session-nav-inner">
-      <a href="index.html" class="nav-link">Sessions</a>
-      <a href="contracts.html" class="nav-link active">Contracts</a>
-      <a href="handouts.html" class="nav-link">Handouts</a>
-    </div>
-  </nav>
- 
-  <header class="page-header">
-    <h2 class="page-title">Contracts</h2>
-    <p class="page-subtitle">A record of work assigned, work completed, and work yet to be done. The details are provided as a courtesy. The expectations should be clear.</p>
-  </header>
- 
-  <div class="tracker">
-    <div class="tracker-stat">
-      <span class="tracker-value">0</span>
-      <span class="tracker-label">Completed</span>
-    </div>
-    <div class="tracker-stat">
-      <span class="tracker-value">1</span>
-      <span class="tracker-label">Active</span>
-    </div>
-    <div class="tracker-stat">
-      <span class="tracker-value">1</span>
-      <span class="tracker-label">Total</span>
-    </div>
-  </div>
- 
-  <main class="content">
- 
-    <article class="contract-entry" id="contract-01">
-      <span class="contract-number">Contract 01</span>
-      <h2 class="contract-title">Gorvak</h2>
-      <span class="contract-status status-active">Active</span>
-      <div class="contract-art">
-        <img src="contract-01.png" alt="Contract 01, Gorvak">
-      </div>
-    </article>
- 
-  </main>
- 
-  <footer class="site-footer">Leave nothing unrecorded</footer>
- 
+
+<div class="page-title-bar">
+  <h1>Connections</h1>
+  <a href="index.html">Return to Records</a>
+</div>
+
+<div class="legend">
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-party)"></div> Party</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-collector)"></div> The Collector</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-carrow)"></div> Carrow</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-target)"></div> Target</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-other)"></div> Other</div>
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+<div class="link-label" id="linkLabel"></div>
+
+<svg id="graph"></svg>
+
+<script>
+const nodes = [
+  // Party
+  { id: 'Croakelion', category: 'party', role: 'Kroaken Seraph' },
+  { id: 'Sticky', category: 'party', role: 'Goblin Wizard' },
+  { id: 'Mai-amar', category: 'party', role: 'Elf Rogue' },
+  { id: 'Bannanas', category: 'party', role: 'Simiah Warrior' },
+  // Collector
+  { id: 'The Collector', category: 'collector', role: 'Employer. Voice in the mirror.' },
+  // Carrow
+  { id: 'Cliff', category: 'carrow', role: 'Tavern keeper in Carrow' },
+  { id: 'Miss Mabel', category: 'carrow', role: 'Runs Miss Mabel\'s House of Lady Favours' },
+  { id: 'Robyn', category: 'carrow', role: 'Chandler. Rents the upstairs room to the Collector.' },
+  { id: 'Wilson', category: 'carrow', role: 'Shopkeep. Mai-amar\'s adoptive mother.' },
+  { id: 'Juno', category: 'carrow', role: 'Innkeeper. Mai-amar\'s adoptive mother.' },
+  // Targets
+  { id: 'Gorvak', category: 'target', role: 'Gorvak the Red. Former warlord. Contract 01.' },
+  // Other
+  { id: 'Old Jack', category: 'other', role: 'Sticky\'s forgetful mentor' },
+  { id: 'Trevor', category: 'other', role: 'Adventurer. Leader of his own group.' },
+  { id: 'Jose', category: 'other', role: 'Member of the White Alligators. Works for the Collector.' },
+  { id: 'The Courier', category: 'other', role: 'Old man on the road. Unhurried. No explanation.' },
+];
+
+const links = [
+  // Party to Party
+  { source: 'Croakelion', target: 'Sticky', label: 'Hunting partners' },
+  { source: 'Croakelion', target: 'Mai-amar', label: 'Hunting partners' },
+  { source: 'Croakelion', target: 'Bannanas', label: 'Hunting partners' },
+  { source: 'Sticky', target: 'Mai-amar', label: 'Fought the troll together' },
+  { source: 'Sticky', target: 'Bannanas', label: 'Drinking companions' },
+  { source: 'Mai-amar', target: 'Bannanas', label: 'Hunting partners' },
+  // Party to Collector
+  { source: 'The Collector', target: 'Croakelion', label: 'Employer. Addressed him by name.' },
+  { source: 'The Collector', target: 'Sticky', label: 'Employer. Addressed him by name.' },
+  { source: 'The Collector', target: 'Mai-amar', label: 'Employer. Addressed him by name.' },
+  { source: 'The Collector', target: 'Bannanas', label: 'Employer. Addressed him by name.' },
+  // Collector network
+  { source: 'The Collector', target: 'Robyn', label: 'Rents her upstairs room. Never met in person.' },
+  { source: 'The Collector', target: 'Cliff', label: 'Cliff passes work to hunters on his behalf' },
+  { source: 'The Collector', target: 'Jose', label: 'Jose works for him. Good money. Real danger.' },
+  { source: 'The Collector', target: 'Gorvak', label: 'Contract 01. Target.' },
+  { source: 'The Collector', target: 'The Courier', label: 'Delivered the Collector\'s letter' },
+  // Carrow connections
+  { source: 'Croakelion', target: 'Miss Mabel', label: 'Neighbour. She feeds him breakfast.' },
+  { source: 'Croakelion', target: 'Cliff', label: 'Cliff pays him for bounty work' },
+  { source: 'Sticky', target: 'Robyn', label: 'She taught him to make candles' },
+  { source: 'Sticky', target: 'Cliff', label: 'Regular at the tavern' },
+  { source: 'Mai-amar', target: 'Wilson', label: 'Adoptive mother' },
+  { source: 'Mai-amar', target: 'Juno', label: 'Adoptive mother' },
+  { source: 'Bannanas', target: 'Cliff', label: 'Regular at the tavern' },
+  { source: 'Wilson', target: 'Juno', label: 'Partners. Raised Mai-amar together.' },
+  // Other
+  { source: 'Sticky', target: 'Old Jack', label: 'Mentor. Forgetful. Half-trained Sticky.' },
+  { source: 'Trevor', target: 'Jose', label: 'Friends. Trevor mentioned Jose\'s new work.' },
+  { source: 'Sticky', target: 'Trevor', label: 'Met at Cliff\'s tavern' },
+  { source: 'Bannanas', target: 'Trevor', label: 'Met at Cliff\'s tavern' },
+];
+
+// Count connections per node
+const connCount = {};
+nodes.forEach(n => connCount[n.id] = 0);
+links.forEach(l => { connCount[l.source]++; connCount[l.target]++; });
+
+const categoryColors = {
+  party: getComputedStyle(document.documentElement).getPropertyValue('--cat-party').trim(),
+  collector: getComputedStyle(document.documentElement).getPropertyValue('--cat-collector').trim(),
+  carrow: getComputedStyle(document.documentElement).getPropertyValue('--cat-carrow').trim(),
+  target: getComputedStyle(document.documentElement).getPropertyValue('--cat-target').trim(),
+  other: getComputedStyle(document.documentElement).getPropertyValue('--cat-other').trim(),
+};
+
+const width = window.innerWidth;
+const height = window.innerHeight;
+
+const svg = d3.select('#graph')
+  .attr('width', width)
+  .attr('height', height);
+
+const g = svg.append('g');
+
+// Zoom
+const zoom = d3.zoom()
+  .scaleExtent([0.3, 3])
+  .on('zoom', (event) => g.attr('transform', event.transform));
+svg.call(zoom);
+
+// Radius based on connections
+function getRadius(id) {
+  const c = connCount[id] || 1;
+  if (id === 'The Collector') return Math.max(32, 12 + c * 3);
+  return Math.max(16, 10 + c * 2.5);
+}
+
+function getFontSize(id) {
+  const r = getRadius(id);
+  return Math.max(6, Math.min(11, r * 0.32));
+}
+
+const simulation = d3.forceSimulation(nodes)
+  .force('link', d3.forceLink(links).id(d => d.id).distance(120))
+  .force('charge', d3.forceManyBody().strength(-400))
+  .force('center', d3.forceCenter(width / 2, height / 2))
+  .force('collision', d3.forceCollide().radius(d => getRadius(d.id) + 8))
+  .force('x', d3.forceX(width / 2).strength(0.04))
+  .force('y', d3.forceY(height / 2).strength(0.04));
+
+// Pin Collector near center
+const collectorNode = nodes.find(n => n.id === 'The Collector');
+collectorNode.fx = width / 2;
+collectorNode.fy = height / 2;
+setTimeout(() => { collectorNode.fx = null; collectorNode.fy = null; }, 3000);
+
+const link = g.append('g')
+  .selectAll('line')
+  .data(links)
+  .join('line')
+  .attr('class', 'link')
+  .attr('stroke-width', 1.5)
+  .on('mouseover', function(event, d) {
+    const label = document.getElementById('linkLabel');
+    label.textContent = d.label;
+    label.style.left = event.clientX + 'px';
+    label.style.top = event.clientY + 'px';
+    label.classList.add('show');
+    d3.select(this).attr('stroke-opacity', 0.9).attr('stroke', '#c4a35a');
+  })
+  .on('mousemove', function(event) {
+    const label = document.getElementById('linkLabel');
+    label.style.left = event.clientX + 'px';
+    label.style.top = event.clientY + 'px';
+  })
+  .on('mouseout', function() {
+    document.getElementById('linkLabel').classList.remove('show');
+    d3.select(this).attr('stroke-opacity', 0.4).attr('stroke', '#3d3328');
+  });
+
+// Touch support for links
+link.on('touchstart', function(event, d) {
+    event.preventDefault();
+    const touch = event.touches[0];
+    const label = document.getElementById('linkLabel');
+    label.textContent = d.label;
+    label.style.left = touch.clientX + 'px';
+    label.style.top = (touch.clientY - 40) + 'px';
+    label.classList.add('show');
+    setTimeout(() => label.classList.remove('show'), 2500);
+  });
+
+const node = g.append('g')
+  .selectAll('g')
+  .data(nodes)
+  .join('g')
+  .call(d3.drag()
+    .on('start', dragstarted)
+    .on('drag', dragged)
+    .on('end', dragended));
+
+node.append('circle')
+  .attr('class', 'node-circle')
+  .attr('r', d => getRadius(d.id))
+  .attr('fill', d => categoryColors[d.category])
+  .attr('fill-opacity', d => d.id === 'The Collector' ? 0.9 : 0.7)
+  .attr('stroke', d => {
+    const col = categoryColors[d.category];
+    return col;
+  })
+  .attr('stroke-opacity', 0.4);
+
+node.append('text')
+  .attr('class', 'node-label')
+  .attr('dy', '0.35em')
+  .attr('font-size', d => getFontSize(d.id) + 'px')
+  .text(d => d.id);
+
+// Tooltip on click
+const tooltip = document.getElementById('tooltip');
+node.on('click', function(event, d) {
+  event.stopPropagation();
+  const conns = links.filter(l => l.source.id === d.id || l.target.id === d.id);
+  let html = '<button class="tooltip-close" onclick="closeTooltip()">&#x2715;</button>';
+  html += '<div class="tooltip-name" style="color:' + categoryColors[d.category] + '">' + d.id + '</div>';
+  html += '<div class="tooltip-role">' + d.role + '</div>';
+  if (conns.length > 0) {
+    html += '<div class="tooltip-connections">';
+    conns.forEach(c => {
+      const other = c.source.id === d.id ? c.target.id : c.source.id;
+      html += '<div class="tooltip-conn-item"><span class="tooltip-conn-name">' + other + ':</span> ' + c.label + '</div>';
+    });
+    html += '</div>';
+  }
+  tooltip.innerHTML = html;
+  tooltip.classList.add('show');
+
+  // Highlight connections
+  link.attr('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 0.9 : 0.1)
+    .attr('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#c4a35a' : '#3d3328')
+    .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 2.5 : 1);
+  node.select('circle')
+    .attr('fill-opacity', n => {
+      if (n.id === d.id) return 1;
+      const connected = conns.some(c => c.source.id === n.id || c.target.id === n.id);
+      return connected ? 0.8 : 0.15;
+    });
+  node.select('text')
+    .attr('fill-opacity', n => {
+      if (n.id === d.id) return 1;
+      const connected = conns.some(c => c.source.id === n.id || c.target.id === n.id);
+      return connected ? 1 : 0.2;
+    });
+});
+
+// Touch support for nodes
+node.on('touchstart', function(event, d) {
+  event.preventDefault();
+  const touch = event.changedTouches[0];
+  const clickEvent = new MouseEvent('click', {
+    clientX: touch.clientX,
+    clientY: touch.clientY,
+    bubbles: true
+  });
+  this.dispatchEvent(clickEvent);
+});
+
+// Click away to reset
+function closeTooltip() {
+  tooltip.classList.remove('show');
+  link.attr('stroke-opacity', 0.4).attr('stroke', '#3d3328').attr('stroke-width', 1.5);
+  node.select('circle').attr('fill-opacity', d => d.id === 'The Collector' ? 0.9 : 0.7);
+  node.select('text').attr('fill-opacity', 1);
+}
+svg.on('click', closeTooltip);
+
+simulation.on('tick', () => {
+  link
+    .attr('x1', d => d.source.x)
+    .attr('y1', d => d.source.y)
+    .attr('x2', d => d.target.x)
+    .attr('y2', d => d.target.y);
+  node.attr('transform', d => `translate(${d.x},${d.y})`);
+});
+
+function dragstarted(event) {
+  if (!event.active) simulation.alphaTarget(0.3).restart();
+  event.subject.fx = event.subject.x;
+  event.subject.fy = event.subject.y;
+}
+function dragged(event) {
+  event.subject.fx = event.x;
+  event.subject.fy = event.y;
+}
+function dragended(event) {
+  if (!event.active) simulation.alphaTarget(0);
+  event.subject.fx = null;
+  event.subject.fy = null;
+}
+
+// Resize
+window.addEventListener('resize', () => {
+  const w = window.innerWidth;
+  const h = window.innerHeight;
+  svg.attr('width', w).attr('height', h);
+  simulation.force('center', d3.forceCenter(w / 2, h / 2));
+  simulation.alpha(0.3).restart();
+});
+</script>
+
 </body>
 </html>
