@@ -228,6 +228,14 @@
     .handout-text { padding: 1.5rem; }
     .tracker { gap: 2rem; }
   }
+  /* CABINET LINK */
+  .cabinet-link-wrap { text-align: center; padding: 5rem 0 2rem; }
+  .cabinet-link { display: inline-block; text-decoration: none; position: relative; }
+  .cabinet-link:hover .cabinet-img { opacity: 1; }
+  .cabinet-link:hover .cabinet-link-label { color: var(--accent-gold); border-color: var(--accent-gold-dim); }
+  .cabinet-img { display: block; max-width: 280px; width: 100%; margin: 0 auto 1.5rem; opacity: 0.75; transition: opacity 0.4s ease; }
+  .cabinet-link-label { display: block; font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--accent-gold-dim); border: 1px solid var(--border-warm); padding: 0.6rem 1.8rem; transition: all 0.3s ease; }
+
   /* ENCRYPTED FRAGMENT */
   .fragment-entry { padding: 4rem 0; border-bottom: 1px solid var(--border-subtle); }
   .fragment-header { font-family: 'Cinzel', serif; font-size: 0.6rem; font-weight: 700; letter-spacing: 0.25em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
@@ -406,6 +414,15 @@
         </div>
  
       </section>
+
+      <!-- DEAD DROP CABINET LINK -->
+      <div class="cabinet-link-wrap">
+        <a href="dead_drop.html" class="cabinet-link">
+          <img src="cabinet-art.png" alt="The Dead Drop" class="cabinet-img">
+          <span class="cabinet-link-label">The Dead Drop</span>
+        </a>
+      </div>
+
     </main>
   </div>
  
