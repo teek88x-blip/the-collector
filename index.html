@@ -152,9 +152,9 @@
   /* CONTRACT ENTRY */
   .contract-entry { padding: 4rem 0; border-bottom: 1px solid var(--border-subtle); }
   .contract-entry:last-child { border-bottom: none; }
-  .contract-number { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-red); margin-bottom: 0.75rem; display: block; }
-  .contract-title { font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(1.2rem, 3.5vw, 1.6rem); color: var(--text-primary); margin-bottom: 1rem; letter-spacing: 0.05em; }
-  .contract-status { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; display: inline-block; padding: 0.25rem 0.75rem; margin-bottom: 2rem; }
+  .contract-number { font-family: 'Cinzel', serif; font-size: 0.85rem; font-weight: 700; letter-spacing: 0.3em; text-transform: uppercase; color: var(--accent-red); margin-bottom: 0.75rem; display: inline; }
+  .contract-title { font-family: 'Cinzel', serif; font-weight: 600; font-size: clamp(1.2rem, 3.5vw, 1.6rem); color: var(--text-primary); margin-bottom: 0rem; letter-spacing: 0.05em; }
+  .contract-status { font-family: 'Cinzel', serif; font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; display: inline; padding: 0.25rem 0.75rem;}
   .status-active { color: var(--accent-gold); border: 1px solid var(--accent-gold-dim); background: rgba(196, 163, 90, 0.08); }
   .status-complete { color: var(--text-muted); border: 1px solid var(--border-subtle); }
   .contract-art { margin-bottom: 2rem; border: 1px solid var(--border-subtle); overflow: hidden; }
@@ -437,9 +437,11 @@
  
     <main class="content">
       <article class="contract-entry" id="contract-01">
-        <span class="contract-number">Contract 01</span>
-        <h2 class="contract-title">Gorvak</h2>
-        <span class="contract-status status-active">Active</span>
+          <div style="display:flex; align-items:center; gap:1rem; flex-wrap:wrap; margin-bottom:2rem;">
+            <span class="contract-number" style="margin-bottom:0;">Contract 01</span>
+            <h2 class="contract-title" style="margin-bottom:0;">Gorvak</h2>
+            <span class="contract-status status-active">Active</span>
+          </div>
         <div class="contract-art">
           <img src="contract-01.png" alt="Contract 01, Gorvak">
         </div>
