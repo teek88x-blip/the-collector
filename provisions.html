@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Provisions — The Tax Collector</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Crimson+Text:ital,wght@0,400;0,600;1,400&family=IM+Fell+English:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg-deep: #0a0908;
+    --bg-card: #1a1714;
+    --border-subtle: #2a2520;
+    --border-warm: #3d3328;
+    --text-primary: #e2d6be;
+    --text-secondary: #b5a892;
+    --text-muted: #847a6c;
+    --accent-red: #8b2d1a;
+    --accent-gold: #c4a35a;
+    --accent-gold-dim: #8a7a45;
+    --shadow-warm: rgba(139, 45, 26, 0.08);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; scrollbar-width: thin; scrollbar-color: var(--border-warm) var(--bg-deep); }
+
+  body {
+    background: var(--bg-deep);
+    color: var(--text-primary);
+    font-family: 'Crimson Text', Georgia, serif;
+    font-size: 18px;
+    line-height: 1.75;
+    min-height: 100vh;
+  }
+
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+
+  /* PAGE HEADER */
+  .page-header {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+    border-bottom: 1px solid var(--border-subtle);
+    position: relative;
+  }
+
+  .page-header::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 1px;
+    background: var(--accent-red);
+  }
+
+  .header-ornament {
+    font-family: 'Cinzel', serif;
+    color: var(--text-muted);
+    font-size: 1rem;
+    letter-spacing: 1.2em;
+    padding-left: 1.2em;
+    display: block;
+    margin-bottom: 1.5rem;
+  }
+
+  .page-title {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(1.6rem, 5vw, 2.4rem);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+  }
+
+  .page-subtitle {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--text-secondary);
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+
+  /* FILTERS */
+  .shop-filters {
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    flex-wrap: wrap;
+    padding: 2.5rem 1rem 1rem;
+  }
+
+  .shop-filter {
+    font-family: 'Cinzel', serif;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    background: none;
+    border: 1px solid var(--border-subtle);
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
+
+  .shop-filter:hover {
+    color: var(--text-secondary);
+    border-color: var(--border-warm);
+  }
+
+  .shop-filter.active {
+    color: var(--accent-gold);
+    border-color: var(--accent-gold-dim);
+    background: rgba(196,163,90,0.06);
+  }
+
+  /* CONTENT */
+  .content {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 0 2rem 6rem;
+  }
+
+  .shop-section { display: none; }
+  .shop-section.visible { display: block; }
+
+  .shop-category { padding: 2rem 0 1rem; }
+
+  .shop-category-title {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent-red);
+    margin-bottom: 1.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid var(--border-subtle);
+  }
+
+  .shop-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 1rem 1.5rem;
+    background: var(--bg-card);
+    border-left: 2px solid var(--border-warm);
+    margin-bottom: 0.6rem;
+    gap: 1rem;
+  }
+
+  .shop-item-info { flex: 1; }
+
+  .shop-item-name {
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--accent-gold);
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  .shop-item-stats {
+    font-family: 'Crimson Text', serif;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.2rem;
+  }
+
+  .shop-item-feature {
+    font-family: 'IM Fell English', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+  }
+
+  .shop-item-price {
+    font-family: 'Cinzel', serif;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: var(--accent-gold);
+    white-space: nowrap;
+    padding-top: 0.15rem;
+  }
+
+  /* RETURN LINK */
+  .return-link {
+    display: block;
+    text-align: center;
+    padding: 3rem 2rem 4rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.55rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.3s ease;
+    border-top: 1px solid var(--border-subtle);
+  }
+
+  .return-link::before { content: '← '; }
+  .return-link:hover { color: var(--accent-gold-dim); }
+
+  @media (max-width: 600px) {
+    .content { padding: 0 1.25rem 4rem; }
+    .shop-filters { padding: 1.5rem 1rem 0.5rem; }
+  }
+</style>
+</head>
+<body>
+
+  <header class="page-header">
+    <span class="header-ornament">&#x2B25; &#x2B25; &#x2B25;</span>
+    <h1 class="page-title">Provisions</h1>
+    <p class="page-subtitle">What is available for purchase, and at what cost. Prices are firm. Haggling is not recommended.</p>
+  </header>
+
+  <div class="shop-filters">
+    <button class="shop-filter active" onclick="filterShop('all', this)">All</button>
+    <button class="shop-filter" onclick="filterShop('primary', this)">Primary Weapons</button>
+    <button class="shop-filter" onclick="filterShop('secondary', this)">Secondary Weapons</button>
+    <button class="shop-filter" onclick="filterShop('armor', this)">Armor</button>
+    <button class="shop-filter" onclick="filterShop('consumables', this)">Consumables</button>
+    <button class="shop-filter" onclick="filterShop('loot', this)">Loot</button>
+  </div>
+
+  <main class="content">
+
+    <!-- PRIMARY WEAPONS — PHYSICAL -->
+    <div class="shop-section visible" data-shop="primary">
+      <div class="shop-category">
+        <h3 class="shop-category-title">Primary Weapons — Physical</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Broadsword</div>
+            <div class="shop-item-stats">Agility | Melee | d8 phy | One-Handed</div>
+            <div class="shop-item-feature">Reliable: +1 to attack rolls</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Longsword</div>
+            <div class="shop-item-stats">Agility | Melee | d10+3 phy | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Battleaxe</div>
+            <div class="shop-item-stats">Strength | Melee | d10+3 phy | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Greatsword</div>
+            <div class="shop-item-stats">Strength | Melee | d10+3 phy | Two-Handed</div>
+            <div class="shop-item-feature">Massive: −1 to Evasion; on a successful attack, roll an additional damage die and discard the lowest</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Mace</div>
+            <div class="shop-item-stats">Strength | Melee | d8+1 phy | One-Handed</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Warhammer</div>
+            <div class="shop-item-stats">Strength | Melee | d12+3 phy | Two-Handed</div>
+            <div class="shop-item-feature">Heavy: −1 to Evasion</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Dagger</div>
+            <div class="shop-item-stats">Finesse | Melee | d8+1 phy | One-Handed</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Quarterstaff</div>
+            <div class="shop-item-stats">Instinct | Melee | d10+3 phy | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Cutlass</div>
+            <div class="shop-item-stats">Presence | Melee | d8+1 phy | One-Handed</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Rapier</div>
+            <div class="shop-item-stats">Presence | Melee | d8 phy | One-Handed</div>
+            <div class="shop-item-feature">Quick: Mark a Stress to target another creature within range</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Halberd</div>
+            <div class="shop-item-stats">Strength | Very Close | d10+2 phy | Two-Handed</div>
+            <div class="shop-item-feature">Cumbersome: −1 to Finesse</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Spear</div>
+            <div class="shop-item-stats">Finesse | Very Close | d8+3 phy | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Shortbow</div>
+            <div class="shop-item-stats">Agility | Far | d6+3 phy | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Crossbow</div>
+            <div class="shop-item-stats">Finesse | Far | d6+1 phy | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Longbow</div>
+            <div class="shop-item-stats">Agility | Very Far | d8+3 phy | Two-Handed</div>
+            <div class="shop-item-feature">Cumbersome: −1 to Finesse</div>
+          </div>
+          <div class="shop-item-price">4 Handfuls</div>
+        </div>
+
+      </div>
+
+      <div class="shop-category">
+        <h3 class="shop-category-title">Primary Weapons — Magic</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Arcane Gauntlets</div>
+            <div class="shop-item-stats">Strength | Melee | d10+3 mag | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Hallowed Axe</div>
+            <div class="shop-item-stats">Strength | Melee | d8+1 mag | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Glowing Rings</div>
+            <div class="shop-item-stats">Agility | Very Close | d10+2 mag | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Hand Runes</div>
+            <div class="shop-item-stats">Instinct | Very Close | d10 mag | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Returning Blade</div>
+            <div class="shop-item-stats">Finesse | Close | d8 mag | One-Handed</div>
+            <div class="shop-item-feature">Returning: appears in your hand immediately after being thrown</div>
+          </div>
+          <div class="shop-item-price">4 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Shortstaff</div>
+            <div class="shop-item-stats">Instinct | Close | d8+1 mag | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Dualstaff</div>
+            <div class="shop-item-stats">Instinct | Far | d6+3 mag | Two-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Scepter</div>
+            <div class="shop-item-stats">Presence | Far | d6 mag | Two-Handed</div>
+            <div class="shop-item-feature">Versatile: can also be used as Presence, Melee, d8</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Wand</div>
+            <div class="shop-item-stats">Knowledge | Far | d6+1 mag | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Greatstaff</div>
+            <div class="shop-item-stats">Knowledge | Very Far | d6 mag | Two-Handed</div>
+            <div class="shop-item-feature">Powerful: on a successful attack, roll an additional damage die and discard the lowest</div>
+          </div>
+          <div class="shop-item-price">4 Handfuls</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- SECONDARY WEAPONS -->
+    <div class="shop-section visible" data-shop="secondary">
+      <div class="shop-category">
+        <h3 class="shop-category-title">Secondary Weapons</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Shortsword</div>
+            <div class="shop-item-stats">Agility | Melee | d8 phy | One-Handed</div>
+            <div class="shop-item-feature">Paired: +2 to primary weapon damage within Melee range</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Round Shield</div>
+            <div class="shop-item-stats">Strength | Melee | d4 phy | One-Handed</div>
+            <div class="shop-item-feature">Protective: +1 to Armor Score</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Tower Shield</div>
+            <div class="shop-item-stats">Strength | Melee | d6 phy | One-Handed</div>
+            <div class="shop-item-feature">Barrier: +2 to Armor Score; −1 to Evasion</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Small Dagger</div>
+            <div class="shop-item-stats">Finesse | Melee | d8 phy | One-Handed</div>
+            <div class="shop-item-feature">Paired: +2 to primary weapon damage within Melee range</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Whip</div>
+            <div class="shop-item-stats">Presence | Very Close | d6 phy | One-Handed</div>
+            <div class="shop-item-feature">Startling: Mark a Stress to force adversaries within Melee back to Close range</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Grappler</div>
+            <div class="shop-item-stats">Finesse | Close | d6 phy | One-Handed</div>
+            <div class="shop-item-feature">Hooked: on a successful attack, pull the target into Melee range</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Hand Crossbow</div>
+            <div class="shop-item-stats">Finesse | Far | d6+1 phy | One-Handed</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ARMOR -->
+    <div class="shop-section visible" data-shop="armor">
+      <div class="shop-category">
+        <h3 class="shop-category-title">Armor</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Gambeson Armor</div>
+            <div class="shop-item-stats">Thresholds: 5/11 | Armor Score: 3</div>
+            <div class="shop-item-feature">Flexible: +1 to Evasion</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Leather Armor</div>
+            <div class="shop-item-stats">Thresholds: 6/13 | Armor Score: 3</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Chainmail Armor</div>
+            <div class="shop-item-stats">Thresholds: 7/15 | Armor Score: 4</div>
+            <div class="shop-item-feature">Heavy: −1 to Evasion</div>
+          </div>
+          <div class="shop-item-price">4 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Full Plate Armor</div>
+            <div class="shop-item-stats">Thresholds: 8/17 | Armor Score: 4</div>
+            <div class="shop-item-feature">Very Heavy: −2 to Evasion; −1 to Agility</div>
+          </div>
+          <div class="shop-item-price">5 Handfuls</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CONSUMABLES -->
+    <div class="shop-section visible" data-shop="consumables">
+      <div class="shop-category">
+        <h3 class="shop-category-title">Consumables</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Stride Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Agility Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Bolster Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Strength Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Control Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Finesse Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Attune Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Instinct Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Charm Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Presence Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Enlighten Potion</div>
+            <div class="shop-item-stats">+1 bonus to your next Knowledge Roll</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Minor Health Potion</div>
+            <div class="shop-item-stats">Clear 1d4 Hit Points</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Minor Stamina Potion</div>
+            <div class="shop-item-stats">Clear 1d4 Stress</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Grindletooth Venom</div>
+            <div class="shop-item-stats">Apply to a physical weapon to add d6 to your next damage roll</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Varik Leaves</div>
+            <div class="shop-item-stats">Eat to immediately gain 2 Hope</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- LOOT -->
+    <div class="shop-section visible" data-shop="loot">
+      <div class="shop-category">
+        <h3 class="shop-category-title">Loot &amp; Sundries</h3>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Premium Bedroll</div>
+            <div class="shop-item-feature">During downtime, you automatically clear a Stress</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Piper Whistle</div>
+            <div class="shop-item-feature">Piercing tone can be heard within a 1-mile radius</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Charging Quiver</div>
+            <div class="shop-item-feature">On a successful arrow attack, gain a damage bonus equal to your current tier</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Alistair's Torch</div>
+            <div class="shop-item-feature">Magic torch you can light at will. Illuminates a cave bright as day</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Speaking Orbs</div>
+            <div class="shop-item-feature">Pair of orbs allowing communication across any distance</div>
+          </div>
+          <div class="shop-item-price">4 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Manacles</div>
+            <div class="shop-item-feature">A pair of locking cuffs with a key</div>
+          </div>
+          <div class="shop-item-price">1 Handful</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Arcane Cloak</div>
+            <div class="shop-item-feature">A Spellcast wearer can adjust its color, texture, and size at will</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Woven Net</div>
+            <div class="shop-item-feature">Make a Finesse Roll to trap a small creature. Target breaks free on Attack Roll (16)</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Fire Jar</div>
+            <div class="shop-item-feature">Pour to instantly produce fire. Contents regenerate on a long rest</div>
+          </div>
+          <div class="shop-item-price">2 Handfuls</div>
+        </div>
+
+        <div class="shop-item">
+          <div class="shop-item-info">
+            <div class="shop-item-name">Suspended Rod</div>
+            <div class="shop-item-feature">Activate to suspend in place. Cannot move, ignores gravity until deactivated</div>
+          </div>
+          <div class="shop-item-price">3 Handfuls</div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <a href="index.html" class="return-link">Return to Records</a>
+
+  <script>
+    function filterShop(category, btn) {
+      document.querySelectorAll('.shop-filter').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const sections = document.querySelectorAll('.shop-section');
+      if (category === 'all') {
+        sections.forEach(s => s.classList.add('visible'));
+      } else {
+        sections.forEach(s => {
+          s.classList.toggle('visible', s.dataset.shop === category);
+        });
+      }
+    }
+  </script>
+
+</body>
+</html>
