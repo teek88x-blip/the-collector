@@ -24,7 +24,8 @@
     --cat-collector: #8b2d1a;
     --cat-carrow: #7a9a6e;
     --cat-target: #a33d28;
-    --cat-other: #6b6155;
+    --cat-org: #7a6a9a;
+  --cat-other: #6b6155;
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html, body { width: 100%; height: 100%; overflow: hidden; }
@@ -57,8 +58,8 @@
   svg { width: 100%; height: 100%; }
   .link { stroke: var(--border-warm); stroke-opacity: 0.4; fill: none; }
   .link:hover { stroke-opacity: 0.8; stroke: var(--accent-gold-dim); }
-  .node-circle { stroke-width: 2; cursor: pointer; transition: filter 0.2s; }
-  .node-circle:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(196,163,90,0.3)); }
+  .node-shape { stroke-width: 2; cursor: pointer; transition: filter 0.2s; }
+  .node-shape:hover { filter: brightness(1.3) drop-shadow(0 0 8px rgba(196,163,90,0.3)); }
   .node-label { font-family: 'Cinzel', serif; fill: var(--text-primary); text-anchor: middle; pointer-events: none; font-weight: 600; letter-spacing: 0.05em; }
 
   @media (max-width: 600px) {
@@ -80,6 +81,7 @@
   <div class="legend-item"><div class="legend-dot" style="background:var(--cat-collector)"></div> The Collector</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--cat-carrow)"></div> Carrow</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--cat-target)"></div> Target</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--cat-org); clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%)"></div> Organisation</div>
   <div class="legend-item"><div class="legend-dot" style="background:var(--cat-other)"></div> Other</div>
 </div>
 
@@ -104,12 +106,24 @@ const nodes = [
   { id: 'Wilson', category: 'carrow', role: 'Shopkeep. Mai-amar\'s adoptive mother.' },
   { id: 'Juno', category: 'carrow', role: 'Innkeeper. Mai-amar\'s adoptive mother.' },
   // Targets
-  { id: 'Gorvak', category: 'target', role: 'Gorvak the Red. Former warlord. Contract 01.' },
+  { id: 'Gorvak', category: 'target', role: 'Gorvak the Red. Former warlord. Contract 01. Deceased.' },
+  { id: 'Captain Vale', category: 'target', role: 'Captain Hadrien Vale. Contract 02. Active.' },
+  // Organisations
+  { id: 'The Verath Consortium', category: 'org', role: 'Merchant organisation operating out of Port of Verath. Controls shipping lanes. Suspected of moving unlisted cargo.' },
   // Other
-  { id: 'Old Jack', category: 'other', role: 'Sticky\'s forgetful mentor' },
+  { id: 'Old Jack', category: 'other', role: 'Sticky\'s forgetful mentor.' },
   { id: 'Trevor', category: 'other', role: 'Adventurer. Leader of his own group.' },
   { id: 'Jose', category: 'other', role: 'Member of the White Alligators. Works for the Collector.' },
-  { id: 'The Courier', category: 'other', role: 'Old man met on the road.' },
+  { id: 'The Courier', category: 'other', role: 'Old man met on the road. Delivered the Collector\'s letter.' },
+  { id: 'Gorvak\'s Veterans', category: 'other', role: 'Soldiers who followed Gorvak into retirement at Ironpeak. Watched him die. Let the party leave.' },
+  { id: 'The Goatherd', category: 'other', role: 'Shepherd on the road to Ironpeak. Sold the party six goats.' },
+  { id: 'Old Doss', category: 'other', role: 'Retired fisherman. Roadside inn card game. Forty years on the coast. Doesn\'t love Vale, doesn\'t hate him.' },
+  { id: 'Sera', category: 'other', role: 'Inn worker. Roadside card game. Personal grudge against the Consortium — her sister was underpaid on a contract.' },
+  { id: 'Resa', category: 'other', role: 'Sera\'s sister. Worked a Consortium contract. Came back half-starved, paid a third of what was promised.' },
+  { id: 'Aldric Goss', category: 'other', role: 'Consortium office manager, Port of Verath. Polite, helpful, untrustworthy. Wants Vale dead. Doesn\'t want the party asking why.' },
+  { id: 'Hatch', category: 'other', role: 'Bartender, the Anchor and Chain, Port of Verath. Blunt. Likes Vale more than the Consortium. Won\'t help find him, won\'t stop anyone asking.' },
+  { id: 'Maren', category: 'other', role: 'Fisherwoman. Runs provisions to Vale\'s cove every few days. Loyal to the fishing community. Will not betray Vale.' },
+  { id: 'Ren', category: 'other', role: 'Consortium clerk. Roadside card game. His cousin was on a ship Vale sank. Calls Vale a murderer. Knows more about unlisted manifests than he admitted.' },
 ];
 
 const links = [
@@ -127,8 +141,11 @@ const links = [
   { source: 'The Collector', target: 'Bannanas', label: 'Employer.' },
   // Collector network
   { source: 'The Collector', target: 'Robyn', label: 'Rents her upstairs room. Never met in person.' },
+  { source: 'The Collector', target: 'Cliff', label: 'Cliff passes work to hunters on his behalf.' },
   { source: 'The Collector', target: 'Jose', label: 'Jose works for him. Good money. Real danger.' },
-  { source: 'The Collector', target: 'Gorvak', label: 'Contract 01. Target.' },
+  { source: 'The Collector', target: 'Gorvak', label: 'Contract 01. Target. Deceased.' },
+  { source: 'The Collector', target: 'Captain Vale', label: 'Contract 02. Target. Active.' },
+  { source: 'The Collector', target: 'The Courier', label: 'Delivered the Collector\'s letter to the party.' },
   // Carrow connections
   { source: 'Croakelion', target: 'Miss Mabel', label: 'Neighbour. Makes sure he eats breakfast.' },
   { source: 'Croakelion', target: 'Cliff', label: 'Regular at the tavern' },
@@ -139,6 +156,27 @@ const links = [
   { source: 'Mai-amar', target: 'Juno', label: 'Adoptive mother' },
   { source: 'Bannanas', target: 'Cliff', label: 'Regular at the tavern' },
   { source: 'Wilson', target: 'Juno', label: 'Partners. Raised Mai-amar together.' },
+  // Gorvak connections
+  { source: 'Bannanas', target: 'Gorvak', label: 'Infiltrated his fortress as a recruit. Dealt the killing blow.' },
+  { source: 'Bannanas', target: 'The Goatherd', label: 'Bought six goats. Used them as cover to enter the fortress.' },
+  { source: 'Gorvak', target: 'Gorvak\'s Veterans', label: 'Soldiers who followed him into retirement at Ironpeak.' },
+  // Card game connections
+  { source: 'Bannanas', target: 'Old Doss', label: 'Met at the roadside inn card game.' },
+  { source: 'Bannanas', target: 'Sera', label: 'Met at the roadside inn card game.' },
+  { source: 'Bannanas', target: 'Ren', label: 'Met at the roadside inn card game.' },
+  { source: 'Old Doss', target: 'Ren', label: 'Shared card table at the roadside inn.' },
+  { source: 'Old Doss', target: 'Sera', label: 'Shared card table at the roadside inn.' },
+  { source: 'Ren', target: 'Sera', label: 'Shared card table at the roadside inn.' },
+  // Sera / Resa / Consortium
+  { source: 'Sera', target: 'Resa', label: 'Sisters.' },
+  { source: 'Resa', target: 'The Verath Consortium', label: 'Worked a Consortium contract. Came back half-starved, paid a third of what was promised.' },
+  // Consortium connections
+  { source: 'Aldric Goss', target: 'The Verath Consortium', label: 'Manages the Verath office.' },
+  { source: 'Ren', target: 'The Verath Consortium', label: 'Works as a clerk for the Consortium.' },
+  { source: 'Captain Vale', target: 'The Verath Consortium', label: 'Ex-Consortium. Now targets their ships exclusively.' },
+  // Port of Verath connections
+  { source: 'Hatch', target: 'Captain Vale', label: 'Supports Vale over the Consortium. He pays for what he takes.' },
+  { source: 'Maren', target: 'Captain Vale', label: 'Runs provisions to his cove every few days.' },
   // Other
   { source: 'Sticky', target: 'Old Jack', label: 'Mentor. Forgetful. Half-trained Sticky.' },
   { source: 'Trevor', target: 'Jose', label: 'Friends. Trevor mentioned Jose\'s new work.' },
@@ -156,6 +194,7 @@ const categoryColors = {
   collector: getComputedStyle(document.documentElement).getPropertyValue('--cat-collector').trim(),
   carrow: getComputedStyle(document.documentElement).getPropertyValue('--cat-carrow').trim(),
   target: getComputedStyle(document.documentElement).getPropertyValue('--cat-target').trim(),
+  org: getComputedStyle(document.documentElement).getPropertyValue('--cat-org').trim(),
   other: getComputedStyle(document.documentElement).getPropertyValue('--cat-other').trim(),
 };
 
@@ -245,15 +284,27 @@ const node = g.append('g')
     .on('drag', dragged)
     .on('end', dragended));
 
-node.append('circle')
-  .attr('class', 'node-circle')
+// Circles for all non-org nodes
+node.filter(d => d.category !== 'org')
+  .append('circle')
+  .attr('class', 'node-shape')
   .attr('r', d => getRadius(d.id))
   .attr('fill', d => categoryColors[d.category])
   .attr('fill-opacity', d => d.id === 'The Collector' ? 0.9 : 0.7)
-  .attr('stroke', d => {
-    const col = categoryColors[d.category];
-    return col;
+  .attr('stroke', d => categoryColors[d.category])
+  .attr('stroke-opacity', 0.4);
+
+// Diamonds for org nodes
+node.filter(d => d.category === 'org')
+  .append('path')
+  .attr('class', 'node-shape')
+  .attr('d', d => {
+    const r = getRadius(d.id) * 1.3;
+    return `M 0,${-r} L ${r},0 L 0,${r} L ${-r},0 Z`;
   })
+  .attr('fill', d => categoryColors[d.category])
+  .attr('fill-opacity', 0.7)
+  .attr('stroke', d => categoryColors[d.category])
   .attr('stroke-opacity', 0.4);
 
 node.append('text')
@@ -285,7 +336,7 @@ node.on('click', function(event, d) {
   link.attr('stroke-opacity', l => (l.source.id === d.id || l.target.id === d.id) ? 0.9 : 0.1)
     .attr('stroke', l => (l.source.id === d.id || l.target.id === d.id) ? '#c4a35a' : '#3d3328')
     .attr('stroke-width', l => (l.source.id === d.id || l.target.id === d.id) ? 2.5 : 1);
-  node.select('circle')
+  node.select('.node-shape')
     .attr('fill-opacity', n => {
       if (n.id === d.id) return 1;
       const connected = conns.some(c => c.source.id === n.id || c.target.id === n.id);
@@ -315,7 +366,7 @@ node.on('touchstart', function(event, d) {
 function closeTooltip() {
   tooltip.classList.remove('show');
   link.attr('stroke-opacity', 0.4).attr('stroke', '#3d3328').attr('stroke-width', 1.5);
-  node.select('circle').attr('fill-opacity', d => d.id === 'The Collector' ? 0.9 : 0.7);
+  node.select('.node-shape').attr('fill-opacity', d => d.id === 'The Collector' ? 0.9 : 0.7);
   node.select('text').attr('fill-opacity', 1);
 }
 svg.on('click', closeTooltip);
